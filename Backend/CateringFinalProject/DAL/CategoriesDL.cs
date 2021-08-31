@@ -1,50 +1,52 @@
-﻿using Entity.Modules;
+﻿using Entity.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DAL
 {
     public class CategoriesDL : ICategoriesDL
     {
-        CateringDBContext db;
+        private readonly CateringDBContext db;
 
         public CategoriesDL(CateringDBContext _db)
         {
             this.db = _db;
         }
         //מחיקת קטגוריה
-        public void DeleteCategory(int id)
+        public async Task DeleteCategoryAsync(int id)
         {
             db.TblCategories.Remove(db.TblCategories.FirstOrDefault(c=> c.CategoryId == id));
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
         //החזרת כל הקטגוריות
-        public List<TblCategories> GetAllCategories()
+        public async Task<List<TblCategories>> GetAllCategoriesAsync()
         {
-            return db.TblCategories.ToList();
+            return await db.TblCategories.ToListAsync();
         }
         //החזרת קטגוריה לפי מזהה מסוים
-        public TblCategories GetCategory(int id)
+        public async Task<TblCategories> GetCategoryAsync(int id)
         {
-            return db.TblCategories.FirstOrDefault(c => c.CategoryId == id);
+            return await db.TblCategories.FirstOrDefaultAsync(c => c.CategoryId == id);
         }
         //הוספה לטבלת קטגוריות
-        public void InsertCategory(TblCategories c)
+        public async Task InsertCategoryAsync(TblCategories c)
         {
             db.TblCategories.Add(c);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
         //עדכון קטגוריה
-        public void UpdateCategory(TblCategories c)
+        public async Task UpdateCategoryAsync(TblCategories c)
         {
             TblCategories cUpdate = db.TblCategories.FirstOrDefault(c1 => c1.CategoryId == c.CategoryId);
             if (cUpdate!=null)
             {
                 cUpdate.CategoryName = c.CategoryName;
                 cUpdate.PreOrderTime = c.PreOrderTime;
+                await db.SaveChangesAsync();
             }
-            db.SaveChanges();
         }
     }
 }

@@ -1,42 +1,43 @@
 ﻿using DAL;
-using Entity.Modules;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BL
 {
     public class CategoriesBL : ICategoriesBL
     {
-        ICategoriesDL categoriesDL;
+        private readonly ICategoriesDL categoriesDL;
 
         public CategoriesBL(ICategoriesDL _categoriesDL)
         {
             this.categoriesDL = _categoriesDL;
         }
 
-        public void DeleteCategory(int id)
+        public async Task DeleteCategoryAsync(int id)
         {
-            categoriesDL.DeleteCategory(id);
+            await categoriesDL.DeleteCategoryAsync(id);
         }
 
-        public List<TblCategories> GetAllCategories()
+        public async Task<List<TblCategories>> GetAllCategoriesAsync()
         {
-            return categoriesDL.GetAllCategories();
+            return await categoriesDL.GetAllCategoriesAsync();
         }
 
-        public TblCategories GetCategory(int id)
+        public async Task<TblCategories> GetCategoryAsync(int id)
         {
-            return categoriesDL.GetCategory(id);
+            return await categoriesDL.GetCategoryAsync(id);
         }
 
-        public void InsertCategory(TblCategories c)
+        public async Task InsertCategoryAsync(TblCategories c)
         {
-            categoriesDL.InsertCategory(c);
+            await categoriesDL.InsertCategoryAsync(c);
         }
 
-        public void UpdateCategory(TblCategories c)
+        public async Task UpdateCategoryAsync(TblCategories c)
         {
-            categoriesDL.UpdateCategory(c);
+            await categoriesDL.UpdateCategoryAsync(c);
         }
     }
 }

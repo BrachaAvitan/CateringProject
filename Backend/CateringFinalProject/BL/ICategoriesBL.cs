@@ -1,21 +1,22 @@
-﻿using Entity.Modules;
+﻿using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BL
 {
     public interface ICategoriesBL
     {
         //קבלת כל הקטגוריות
-        List<TblCategories> GetAllCategories();
+        Task<List<TblCategories>> GetAllCategoriesAsync();
         //קבלת קטגוריה לפי מזהה קטגוריה
-        TblCategories GetCategory(int id);
+        Task<TblCategories> GetCategoryAsync(int id);
         //הוספה לטבלת קטגוריה
-        void InsertCategory(TblCategories c);
+        Task InsertCategoryAsync(TblCategories c);
         //עדכון קטגוריה
-        void UpdateCategory(TblCategories c);
+        Task UpdateCategoryAsync(TblCategories c);
         //מחיקת קטגוריה
-        void DeleteCategory(int id);
+        Task DeleteCategoryAsync(int id);
     }
 }

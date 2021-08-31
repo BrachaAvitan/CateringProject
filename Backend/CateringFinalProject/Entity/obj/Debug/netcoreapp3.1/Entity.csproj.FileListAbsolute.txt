@@ -10,3 +10,15 @@ C:\2020\HandashaYearB\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity
 C:\2020\HandashaYearB\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.runtimeconfig.dev.json
 C:\2020\HandashaYearB\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csproj.CoreCompileInputs.cache
 C:\2020\HandashaYearB\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.genruntimeconfig.cache
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.deps.json
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.runtimeconfig.json
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.runtimeconfig.dev.json
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.dll
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.pdb
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.AssemblyInfoInputs.cache
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.AssemblyInfo.cs
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csproj.CoreCompileInputs.cache
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.dll
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.pdb
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.genruntimeconfig.cache
+C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csprojAssemblyReference.cache

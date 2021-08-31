@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bH97vki3ioMaEi7mR2o9Ksqi3Aqci7OMf9lICKM+58HaKgbFeqbpKMN/fF1cqD6W1e87skaDamRVTybgdG5Xeg==",
+  "dgSpecHash": "kZhktfWBQTwEl/ztKCyZ+JF6nrQDxlkG1Ar638pRbw6U3NhfYAk2aX/xQANS0S3lYzpUM3n43wF6fsWbEQd3Ww==",
   "success": true,
-  "projectFilePath": "C:\\2020\\HandashaYearB\\CateringFinalProject\\Entity\\Entity.csproj",
+  "projectFilePath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ברכי אביטן\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\ברכי אביטן\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
