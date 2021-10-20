@@ -36,6 +36,9 @@ namespace CateringEFCore
             services.AddScoped(typeof(IToolDL), typeof(ToolDL));
             services.AddScoped(typeof(IToolBL), typeof(ToolBL));
 
+            services.AddScoped(typeof(IRecipeDL), typeof(RecipeDL));
+            services.AddScoped(typeof(IRecipeBL), typeof(RecipeBL));
+
             services.AddDbContext<CateringDBContext>(options =>
             options.UseSqlServer("Data Source=.;Initial Catalog=CateringDB;Integrated Security=True;Pooling=False"));
         }

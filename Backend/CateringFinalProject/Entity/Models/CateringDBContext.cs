@@ -18,6 +18,7 @@ namespace Entity.Models
         public virtual DbSet<TblCategories> TblCategories { get; set; }
         public virtual DbSet<TblDetailsEvent> TblDetailsEvent { get; set; }
         public virtual DbSet<TblDoseType> TblDoseType { get; set; }
+        public virtual DbSet<TblManager> TblManager { get; set; }
         public virtual DbSet<TblMenuTypes> TblMenuTypes { get; set; }
         public virtual DbSet<TblProducts> TblProducts { get; set; }
         public virtual DbSet<TblProductsToRecipe> TblProductsToRecipe { get; set; }
@@ -94,6 +95,31 @@ namespace Entity.Models
                     .HasColumnName("doseName")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblManager>(entity =>
+            {
+                entity.HasKey(e => e.ManagerId)
+                    .HasName("PK__tbl_mana__47E0141F4D7B74E7");
+
+                entity.ToTable("tbl_manager");
+
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblMenuTypes>(entity =>
