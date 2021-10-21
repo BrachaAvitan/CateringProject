@@ -5,13 +5,24 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import api from '../api';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,8 +47,57 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-export default function SignUp() {
+export default function SignUp(props: any) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = props.history;
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+        .required('Name is required')
+        .min(6, 'Name must be at least 6 characters')
+        .max(20, 'Name must not exceed 20 characters'),
+    userName: Yup.string()
+        .required('Name is required')
+        .min(6, 'Name must be at least 6 characters')
+        .max(20, 'Name must not exceed 20 characters'),
+    email: Yup.string()
+        .required('email is required'),
+        // .min(6, 'email must be at least 6 characters')
+        // .max(20, 'email must not exceed 20 characters'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password must be at least 6 characters')
+        .max(40, 'Password must not exceed 40 characters'),
+});
+
+  const {
+      register,
+      handleSubmit,
+      formState: { errors }
+  } = useForm({
+      resolver: yupResolver(validationSchema)
+  });
+
+  //פונקציה שיוצרת משתמש חדש
+  const onSubmit = async (data:any) =>{
+      console.log(JSON.stringify(data, null, 2));
+      const newManager = {
+        name: data.userName,
+        email: data.email,
+        password: data.password
+      }
+      try{
+          await api.post(`/Manager/InsertManager`,newManager).then(res=> res.data);
+          const all : any = await api.get(`/Manager/Manager`).then(res=> res.data);
+          alert(JSON.stringify(all, null, 2));
+          console.log(all);
+         // dispatch({type:'USER_CONNECTION', payload: {name: manager.name, password: manager.password}});
+      }
+      catch{
+          console.log("no sucsees");
+      }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,15 +113,16 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="שם פרטי"
+                id="name"
+                label="שם פרטי ומשפחה"
                 autoFocus
                 className={classes.root}
+                {...register('name')}
+                error={errors.name ? true : false}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -69,10 +130,11 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="שם משפחה"
-                name="Last Name"
-                autoComplete="lname"
+                id="userName"
+                label="שם משתמש"
+                autoComplete="userName"
+                {...register('userName')}
+                error={errors.userName ? true : false}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,8 +144,9 @@ export default function SignUp() {
                 fullWidth
                 id="email"
                 label="דואר אלקטרוני"
-                name="email"
                 autoComplete="email"
+                {...register('email')}
+                error={errors.email ? true : false}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,11 +154,12 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
                 label="סיסמא"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                {...register('password')}
+                error={errors.password ? true : false}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,12 +175,13 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit(onSubmit)}
           >
             הרשמה
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/SiginIn" variant="body2">
+              <Link to="/SiginIn">
                כבר יש לך חשבון? התחברות
               </Link>
             </Grid>

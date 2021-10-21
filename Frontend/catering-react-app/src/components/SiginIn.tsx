@@ -5,13 +5,25 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import api from '../api';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +46,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props: any) {
+  const dispatch = useDispatch();
+  const history = props.history;
+
   const classes = useStyles();
+
+  const validationSchema = Yup.object().shape({
+    userName: Yup.string()
+        .required('UserName is required')
+        .min(6, 'UserName must be at least 6 characters')
+        .max(20, 'UserName must not exceed 20 characters'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password must be at least 6 characters')
+        .max(40, 'Password must not exceed 40 characters'),
+});
+
+  const {
+      register,
+      handleSubmit,
+      formState: { errors }
+  } = useForm({
+      resolver: yupResolver(validationSchema)
+  });
+
+  //פונקציה שמכניסה משתמש
+  const onSubmit = async (data:any) =>{
+      console.log(JSON.stringify(data, null, 2));
+      try{
+        const manager :any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res=> res.data);
+        if(manager){
+          alert(JSON.stringify(manager, null, 2));
+          console.log(manager.name);
+          dispatch({type:'USER_CONNECTION', payload: {name: manager.name, password: manager.password}});
+        }
+        else{
+          alert("שם משתמש או סיסמא אינם נכונים")
+          history.push('/SiginIn');
+        }
+      }
+      catch{
+        
+      }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,23 +107,31 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="דואר אלקטרוני"
-            name="email"
-            autoComplete="email"
+            id="userName"
+            label="שם משתמש"
+            autoComplete="userName"
             autoFocus
+            {...register('userName')}
+            error={errors.userName ? true : false}
           />
+          <Typography variant="inherit" color="textSecondary">
+                        {errors.userName?.message}
+          </Typography>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
             label="סיסמא"
             type="password"
             id="password"
             autoComplete="current-password"
+            {...register('password')}
+            error={errors.password ? true : false}
           />
+          <Typography variant="inherit" color="textSecondary">
+                  {errors.password?.message}
+          </Typography>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="זכור אותי"
@@ -80,17 +142,18 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit(onSubmit)}
           >
             התחברות
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="/passwordForget">
                 שכחת סיסמא?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/SiginUp">
                 {"אין לך חשבון? הרשמה"}
               </Link>
             </Grid>
