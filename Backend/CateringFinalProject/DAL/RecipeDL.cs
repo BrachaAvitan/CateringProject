@@ -44,6 +44,7 @@ namespace DAL
             TblRecipes rUpdate = db.TblRecipes.FirstOrDefault(r => r.RecipesId == recipe.RecipesId);
             if (rUpdate != null)
             {
+                rUpdate.Name = recipe.Name;
                 rUpdate.QuantityOfPortions = recipe.QuantityOfPortions;
                 rUpdate.MenuId = recipe.MenuId;
                 rUpdate.DoseTypeId = recipe.DoseTypeId;

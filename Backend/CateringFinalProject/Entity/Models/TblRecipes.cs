@@ -12,6 +12,7 @@ namespace Entity.Models
         }
 
         public int RecipesId { get; set; }
+        public string Name { get; set; }
         public int? QuantityOfPortions { get; set; }
         public int MenuId { get; set; }
         public int? DoseTypeId { get; set; }

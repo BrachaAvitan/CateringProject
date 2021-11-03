@@ -11,12 +11,12 @@ namespace Entity.Models
         }
 
         public int EventId { get; set; }
+        public string NameOfEventOwner { get; set; }
         public string Details { get; set; }
         public DateTime? Date { get; set; }
-        public int? ToolId { get; set; }
+        public string ToolsType { get; set; }
         public int? NumberOfDose { get; set; }
 
-        public virtual TblTools Tool { get; set; }
         public virtual ICollection<TblRecipesToOrder> TblRecipesToOrder { get; set; }
     }
 }

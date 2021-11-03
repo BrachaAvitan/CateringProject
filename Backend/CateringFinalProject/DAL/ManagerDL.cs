@@ -53,6 +53,7 @@ namespace DAL
                 mUpdate.Name = manager.Name;
                 mUpdate.Password = manager.Password;
                 mUpdate.Email = manager.Email;
+                mUpdate.PhoneNumber = manager.PhoneNumber;
                 await db.SaveChangesAsync();
             }
         }

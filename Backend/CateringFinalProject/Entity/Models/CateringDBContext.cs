@@ -60,7 +60,7 @@ namespace Entity.Models
             modelBuilder.Entity<TblDetailsEvent>(entity =>
             {
                 entity.HasKey(e => e.EventId)
-                    .HasName("PK__tmp_ms_x__2DC7BD093E5D1D7E");
+                    .HasName("PK__tmp_ms_x__2DC7BD095F40D1D6");
 
                 entity.ToTable("tbl_detailsEvent");
 
@@ -71,15 +71,23 @@ namespace Entity.Models
                     .HasColumnType("date");
 
                 entity.Property(e => e.Details)
+                    .HasColumnName("details")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ToolId).HasColumnName("toolId");
+                entity.Property(e => e.NameOfEventOwner)
+                    .IsRequired()
+                    .HasColumnName("nameOfEventOwner")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.Tool)
-                    .WithMany(p => p.TblDetailsEvent)
-                    .HasForeignKey(d => d.ToolId)
-                    .HasConstraintName("FK__tbl_detai__toolI__571DF1D5");
+                entity.Property(e => e.NumberOfDose).HasColumnName("numberOfDose");
+
+                entity.Property(e => e.ToolsType)
+                    .IsRequired()
+                    .HasColumnName("toolsType")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TblDoseType>(entity =>
@@ -120,6 +128,11 @@ namespace Entity.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.PhoneNumber)
+                    .IsRequired()
+                    .HasColumnName("phoneNumber")
+                    .HasMaxLength(10);
             });
 
             modelBuilder.Entity<TblMenuTypes>(entity =>
@@ -196,13 +209,13 @@ namespace Entity.Models
                 entity.HasOne(d => d.Recipes)
                     .WithMany(p => p.TblProductsToRecipe)
                     .HasForeignKey(d => d.RecipesId)
-                    .HasConstraintName("FK__tbl_Produ__recip__4D94879B");
+                    .HasConstraintName("FK__tbl_Produ__recip__72C60C4A");
             });
 
             modelBuilder.Entity<TblRecipes>(entity =>
             {
                 entity.HasKey(e => e.RecipesId)
-                    .HasName("PK__tbl_reci__D30C6B3D57FF58AA");
+                    .HasName("PK__tmp_ms_x__D30C6B3DC3F418D5");
 
                 entity.ToTable("tbl_recipes");
 
@@ -212,16 +225,21 @@ namespace Entity.Models
 
                 entity.Property(e => e.MenuId).HasColumnName("menuId");
 
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
+
                 entity.HasOne(d => d.DoseType)
                     .WithMany(p => p.TblRecipes)
                     .HasForeignKey(d => d.DoseTypeId)
-                    .HasConstraintName("FK__tbl_recip__doseT__3B75D760");
+                    .HasConstraintName("FK__tbl_recip__doseT__70DDC3D8");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.TblRecipes)
                     .HasForeignKey(d => d.MenuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_recip__menuI__3A81B327");
+                    .HasConstraintName("FK__tbl_recip__menuI__6FE99F9F");
             });
 
             modelBuilder.Entity<TblRecipesToOrder>(entity =>
@@ -242,12 +260,12 @@ namespace Entity.Models
                 entity.HasOne(d => d.Event)
                     .WithMany(p => p.TblRecipesToOrder)
                     .HasForeignKey(d => d.EventId)
-                    .HasConstraintName("FK__tbl_recip__event__5441852A");
+                    .HasConstraintName("FK__tbl_recip__event__05D8E0BE");
 
                 entity.HasOne(d => d.Recipes)
                     .WithMany(p => p.TblRecipesToOrder)
                     .HasForeignKey(d => d.RecipesId)
-                    .HasConstraintName("FK__tbl_recip__recip__3D5E1FD2");
+                    .HasConstraintName("FK__tbl_recip__recip__71D1E811");
             });
 
             modelBuilder.Entity<TblTools>(entity =>
