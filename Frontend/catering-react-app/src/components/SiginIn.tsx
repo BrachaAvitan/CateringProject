@@ -35,15 +35,48 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'rgba(223, 152, 20, 0.925)'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "grey"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "grey"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "grey"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "grey"
+    },
+    "& .MuiFormLabel-root.Mui-error":{
+      color: 'red !important'
+    }
+  }
 }));
 
 export default function SignIn(props: any) {
@@ -103,6 +136,7 @@ export default function SignIn(props: any) {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            className={classes.root}
             variant="outlined"
             margin="normal"
             required
@@ -118,6 +152,7 @@ export default function SignIn(props: any) {
                         {errors.userName?.message}
           </Typography>
           <TextField
+            className={classes.root}
             variant="outlined"
             margin="normal"
             required
@@ -131,7 +166,7 @@ export default function SignIn(props: any) {
           />
           <Typography variant="inherit" color="textSecondary">
                   {errors.password?.message}
-          </Typography>
+          </Typography><br></br>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="זכור אותי"
@@ -140,8 +175,7 @@ export default function SignIn(props: any) {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
-            className={classes.submit}
+            className={`p-button ${classes.submit}`}
             onClick={handleSubmit(onSubmit)}
           >
             התחברות

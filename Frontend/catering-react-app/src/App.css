@@ -1,3 +1,18 @@
 .App {
   text-align: center;
 }
+.link {
+  text-decoration: none;
+  color: grey;
+  padding: 4%;
+}
+.link:hover{
+  color: white;
+}
+.link:focus{
+  color: white;
+}
+.p-button{
+  background-color: rgb(66, 64, 64) !important;
+  color: white !important;
+}
