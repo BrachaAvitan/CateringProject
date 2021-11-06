@@ -10,3 +10,16 @@ C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\DAL\obj\Debug\n
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.dll
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\Entity.dll
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\Entity.pdb
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.AssemblyReference.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.pdb

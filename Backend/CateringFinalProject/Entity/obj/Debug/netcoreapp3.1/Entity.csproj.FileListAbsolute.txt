@@ -22,3 +22,16 @@ C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debu
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.pdb
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.genruntimeconfig.cache
 C:\2020\HandashaYearB\final-project\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csprojAssemblyReference.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.deps.json
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.runtimeconfig.json
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.runtimeconfig.dev.json
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.dll
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\bin\Debug\netcoreapp3.1\Entity.pdb
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csproj.AssemblyReference.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.AssemblyInfoInputs.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.AssemblyInfo.cs
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.csproj.CoreCompileInputs.cache
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.dll
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.pdb
+C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\Entity\obj\Debug\netcoreapp3.1\Entity.genruntimeconfig.cache
