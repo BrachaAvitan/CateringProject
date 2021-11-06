@@ -42,6 +42,9 @@ namespace CateringEFCore
             services.AddScoped(typeof(IManagerDL), typeof(ManagerDL));
             services.AddScoped(typeof(IManagerBL), typeof(ManagerBL));
 
+            services.AddScoped(typeof(ITypeOfMeasurementIdDL), typeof(TypeOfMeasurementIdDL));
+            services.AddScoped(typeof(ITypeOfMeasurementIdBL), typeof(TypeOfMeasurementIdBL));
+
             services.AddDbContext<CateringDBContext>(options =>
             options.UseSqlServer("Data Source=.;Initial Catalog=CateringDB;Integrated Security=True;Pooling=False"));
         }
