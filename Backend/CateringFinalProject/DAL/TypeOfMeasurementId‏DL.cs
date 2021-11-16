@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class TypeOfMeasurementId‏DL : ITypeOfMeasurementIdDL
+    public class TypeOfMeasurementId‏DL : ITypeOfMeasurementIdDL
     {
         private readonly CateringDBContext db;
         public TypeOfMeasurementId‏DL(CateringDBContext _db)
