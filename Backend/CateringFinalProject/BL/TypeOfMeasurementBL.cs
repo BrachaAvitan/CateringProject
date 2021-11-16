@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-   public class TypeOfMeasurementId‏BL : ITypeOfMeasurementIdBL
+   public class TypeOfMeasurementBL : ITypeOfMeasurementBL
     {
-        private readonly ITypeOfMeasurementIdDL typeOfMeasurementIdDL;
-        public TypeOfMeasurementId‏BL(ITypeOfMeasurementIdDL _typeOfMeasurementIdDL)
+        private readonly ITypeOfMeasurement‏DL typeOfMeasurementIdDL;
+
+        public TypeOfMeasurementBL(ITypeOfMeasurement‏DL _typeOfMeasurementIdDL)
         {
             this.typeOfMeasurementIdDL = _typeOfMeasurementIdDL;
         }
@@ -31,14 +32,14 @@ namespace BL
             return await typeOfMeasurementIdDL.GetMeasurementAsync(id);
         }
 
-        public async Task InsertMeasurementsAsync(TblTypesOfMeasurements c)
+        public async Task InsertMeasurementsAsync(TblTypesOfMeasurements t)
         {
-            await typeOfMeasurementIdDL.InsertMeasurementsAsync(c);
+            await typeOfMeasurementIdDL.InsertMeasurementsAsync(t);
         }
 
-        public async Task UpdateMeasurementsAsync(TblTypesOfMeasurements c)
+        public async Task UpdateMeasurementsAsync(TblTypesOfMeasurements t)
         {
-            await typeOfMeasurementIdDL.UpdateMeasurementsAsync(c);
+            await typeOfMeasurementIdDL.UpdateMeasurementsAsync(t);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CateringEFCore
 
             services.AddControllers();
 
-            services.AddControllers().AddNewtonsoftJson();//המרה של המזהה שמקשר לטבלה לסוג של העמודה
+            services.AddControllers().AddNewtonsoftJson();//המרה של המזהה שמקשר לטבלה מסויימת לאובייקט מסוג של העמודה
 
             services.AddScoped(typeof(ICategoriesDL), typeof(CategoriesDL));
             services.AddScoped(typeof(ICategoriesBL), typeof(CategoriesBL));
@@ -45,14 +45,19 @@ namespace CateringEFCore
             services.AddScoped(typeof(IdoesTypeDL), typeof(doesTypeDL));
             services.AddScoped(typeof(IdoesTypeBL), typeof(doesTypeBL));
 
-            services.AddScoped(typeof(ITypeOfMeasurementIdDL), typeof(TypeOfMeasurementIdDL));
-            services.AddScoped(typeof(ITypeOfMeasurementIdBL), typeof(TypeOfMeasurementIdBL));
+            services.AddScoped(typeof(ITypeOfMeasurement‏DL), typeof(TypeOfMeasurementDL));
+            services.AddScoped(typeof(ITypeOfMeasurementBL), typeof(TypeOfMeasurementBL));
 
             services.AddScoped(typeof(IProductsToRecipeDL), typeof(productsToRecipeDL));
             services.AddScoped(typeof(IProductsToRecipeBL), typeof(productsToRecipeBL));
 
             services.AddScoped(typeof(IRecipesToOrderDL), typeof(recipesToOrderDL));
             services.AddScoped(typeof(IRecipesToOrderBL), typeof(recipesToOrderBL));
+
+            services.AddScoped(typeof(IMenuTypesDL), typeof(MenuTypesDL));
+            services.AddScoped(typeof(IMenuTypesBL), typeof(MenuTypesBL));
+
+            //details Event & menuTypes
 
             services.AddDbContext<CateringDBContext>(options =>
             options.UseSqlServer("Data Source=.;Initial Catalog=CateringDB;Integrated Security=True;Pooling=False"));

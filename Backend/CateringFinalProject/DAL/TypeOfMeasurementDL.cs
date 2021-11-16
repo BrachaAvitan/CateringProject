@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class TypeOfMeasurementId‏DL : ITypeOfMeasurementIdDL
+    public class TypeOfMeasurementDL : ITypeOfMeasurement‏DL
     {
         private readonly CateringDBContext db;
-        public TypeOfMeasurementId‏DL(CateringDBContext _db)
+        public TypeOfMeasurementDL(CateringDBContext _db)
         {
             this.db = _db;
         }
@@ -32,9 +32,9 @@ namespace DAL
             return await db.TblTypesOfMeasurements.FirstOrDefaultAsync(t => t.TypeOfMeasurementId == id);
         }
         //הוספה לטבלת סוגי מדידות 
-        public async Task InsertMeasurementsAsync(TblTypesOfMeasurements c)
+        public async Task InsertMeasurementsAsync(TblTypesOfMeasurements t)
         {
-            db.TblTypesOfMeasurements.Add(c);
+            db.TblTypesOfMeasurements.Add(t);
             await db.SaveChangesAsync();
         }
         //עידכון טבלת סוגי מדידות
