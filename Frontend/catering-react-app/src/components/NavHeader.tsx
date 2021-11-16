@@ -13,6 +13,7 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Recipes from './Recipes';
 
 const useStylesNav = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,6 +70,9 @@ function NavHeader(){
             <span>שלום דף הבית</span>
           </Route>
         </Switch> */}
+        <Switch>
+              <Route path="/Recipes" exact component={Recipes}></Route>
+        </Switch>
         </>
     );
 }
