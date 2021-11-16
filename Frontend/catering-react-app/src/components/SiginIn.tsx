@@ -75,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiFormLabel-root.Mui-error":{
       color: 'red !important'
+    },
+    "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline":{
+      color: 'red !important'
     }
   }
 }));
@@ -166,7 +169,7 @@ export default function SignIn(props: any) {
           />
           <Typography variant="inherit" color="textSecondary">
                   {errors.password?.message}
-          </Typography><br></br>
+          </Typography>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="זכור אותי"

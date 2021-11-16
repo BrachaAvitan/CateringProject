@@ -15,4 +15,5 @@
 .p-button{
   background-color: rgb(66, 64, 64) !important;
   color: white !important;
+  border-color: rgb(66, 64, 64) !important;
 }
