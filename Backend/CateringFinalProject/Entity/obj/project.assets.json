@@ -4950,23 +4950,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\USER\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\ברכי אביטן\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USER\\Documents\\final-project\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+      "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
       "projectName": "Entity",
-      "projectPath": "C:\\Users\\USER\\Documents\\final-project\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
-      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USER\\Documents\\final-project\\CateringProject\\Backend\\CateringFinalProject\\Entity\\obj\\",
+      "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+      "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
+      "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4978,7 +4974,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -4990,7 +4985,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
@@ -5018,7 +5012,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
