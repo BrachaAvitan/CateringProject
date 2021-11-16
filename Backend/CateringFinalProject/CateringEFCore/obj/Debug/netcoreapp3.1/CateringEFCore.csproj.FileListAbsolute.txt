@@ -123,7 +123,6 @@ C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProje
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\staticwebassets\CateringEFCore.StaticWebAssets.xml
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\scopedcss\bundle\CateringEFCore.styles.css
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.RazorTargetAssemblyInfo.cache
-C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.csproj.CopyComplete
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.dll
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.pdb
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.genruntimeconfig.cache

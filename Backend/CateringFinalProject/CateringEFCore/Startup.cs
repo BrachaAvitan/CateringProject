@@ -42,8 +42,17 @@ namespace CateringEFCore
             services.AddScoped(typeof(IManagerDL), typeof(ManagerDL));
             services.AddScoped(typeof(IManagerBL), typeof(ManagerBL));
 
+            services.AddScoped(typeof(IdoesTypeDL), typeof(doesTypeDL));
+            services.AddScoped(typeof(IdoesTypeBL), typeof(doesTypeBL));
+
             services.AddScoped(typeof(ITypeOfMeasurementIdDL), typeof(TypeOfMeasurementIdDL));
             services.AddScoped(typeof(ITypeOfMeasurementIdBL), typeof(TypeOfMeasurementIdBL));
+
+            services.AddScoped(typeof(IProductsToRecipeDL), typeof(productsToRecipeDL));
+            services.AddScoped(typeof(IProductsToRecipeBL), typeof(productsToRecipeBL));
+
+            services.AddScoped(typeof(IRecipesToOrderDL), typeof(recipesToOrderDL));
+            services.AddScoped(typeof(IRecipesToOrderBL), typeof(recipesToOrderBL));
 
             services.AddDbContext<CateringDBContext>(options =>
             options.UseSqlServer("Data Source=.;Initial Catalog=CateringDB;Integrated Security=True;Pooling=False"));

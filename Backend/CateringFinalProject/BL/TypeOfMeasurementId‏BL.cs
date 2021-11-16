@@ -17,7 +17,7 @@ namespace BL
         }
         public async Task DeleteMeasurementsAsync(int id)
         {
-            return await typeOfMeasurementIdDL.GetAllCategoriesAsync();
+             await typeOfMeasurementIdDL.DeleteMeasurementsAsync(id);
         }
 
         public async Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync()
