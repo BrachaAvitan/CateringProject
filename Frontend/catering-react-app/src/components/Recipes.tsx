@@ -22,7 +22,9 @@ import { InputText } from 'primereact/inputtext';
 import './Recipes.css';
 import { RecipeService } from '../services/RecipeService';
 import RecipesDropdown from './RecipesDropdown';
-const Recipes = () => {
+import { useDispatch, useSelector } from 'react-redux';
+
+const Recipes = (props: any) => {
 
     let emptyRecipe = {
         recipesId: 0,
@@ -31,6 +33,7 @@ const Recipes = () => {
         menuId: 0,
         doseTypeId:0,
         instructions:'',
+        managerId:0,
         menu: {
             menuId: 0,
             menuName:''
@@ -51,16 +54,17 @@ const Recipes = () => {
     const recipeService = new RecipeService();
     const [recipes, setRecipes] = useState<any>(null);
     const [recipe, setRecipe] = useState(emptyRecipe);
-    const [menuId, setMenuId] = useState<any>(emptyRecipe.menuId);
+    const [menuId, setMenuId] = useState<any>(0);
+    const connectedUser = useSelector((state: any)=> state.userReducer.connectedUser);
  
     useEffect(() => {
         //productService.getProducts().then(data => setProducts(data));
-        recipeService.getRecipes().then(data => setRecipes(data));
+        recipeService.getRecipes(connectedUser.managerId).then(data => setRecipes(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const formatCurrency = (value:any) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
+    // const formatCurrency = (value:any) => {
+    //     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    // }
 
     const openNew = () => {
         setRecipe(emptyRecipe);
@@ -89,28 +93,31 @@ const Recipes = () => {
             let _recipe = {...recipe};
             console.log(_recipe);
             let rUpdate = {
-                recipesId: _recipe.recipesId,
-                name: _recipe.name,
+                RecipesId: _recipe.recipesId,
+                Name: _recipe.name,
                 QuantityOfPortions: _recipe.quantityOfPortions,
-                menuId: menuId,
-                doseTypeId:1,
-                instructions:_recipe.instructions,
+                MenuId: menuId,
+                DoseTypeId:1,
+                Instructions:_recipe.instructions,
+                ManagerId: connectedUser.managerId
             }
             if (recipe.recipesId) {
                 const index = findIndexById(recipe.recipesId);
                  console.log(_recipe);
                 _recipes[index] = _recipe;
                 //update recipe
-                 recipeService.updateRecipe(rUpdate);
+                 debugger
+                recipeService.updateRecipe(rUpdate);
                  toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Updated', life: 3000 });
             }
             else {
                 let rInsert = {
-                    name: _recipe.name,
+                    Name: _recipe.name,
                     QuantityOfPortions: _recipe.quantityOfPortions,
-                    menuId: menuId,
-                    doseTypeId:1,
-                    instructions: _recipe.instructions,
+                    MenuId: menuId,
+                    DoseTypeId:1,
+                    Instructions: _recipe.instructions,
+                    ManagerId: connectedUser.managerId
                 }
                 //add recipe
                 recipeService.insertRecipe(rInsert);

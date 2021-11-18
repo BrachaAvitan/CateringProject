@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'rgba(223, 152, 20, 0.925)'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -174,7 +175,7 @@ export default function SignUp(props: any) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={`p-button ${classes.submit}`}
             onClick={handleSubmit(onSubmit)}
           >
             הרשמה

@@ -12,8 +12,9 @@ const menuTypeService = new MenuTypeService();
 const RecipesDropdown = (props: any) => {
     const [menuTypes, setMenuTypes] = useState<any>([]);
     const {menuType ,setMenu} = props;
-    const [selectedMenuTypes, setSelectedMenuTypes] = useState(menuType);
-
+    // debugger
+    const [selectedMenuTypes, setSelectedMenuTypes] = useState<any>(menuType);
+    // debugger
     useEffect(() => {
         menuTypeService.getMenuTypes().then((res:any) => setMenuTypes(res));
     },[]);
@@ -27,7 +28,7 @@ const RecipesDropdown = (props: any) => {
     return (
         <div className="dropdown-demo">
             <div className="card">
-                <Dropdown value={selectedMenuTypes} optionLabel="menuName" optionValue="menuId" options={menuTypes} onChange={onMenuTypeChange} placeholder="סוג תפריט"/>
+                <Dropdown value={selectedMenuTypes.menuName} optionLabel="menuName" optionValue="menuId" options={menuTypes} onChange={onMenuTypeChange} placeholder="סוג תפריט"/>
             </div>
         </div>
     );

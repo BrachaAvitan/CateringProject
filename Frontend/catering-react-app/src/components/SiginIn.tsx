@@ -115,7 +115,7 @@ export default function SignIn(props: any) {
         if(manager){
           alert(JSON.stringify(manager, null, 2));
           console.log(manager.name);
-          dispatch({type:'USER_CONNECTION', payload: {name: manager.name, password: manager.password}});
+          dispatch({type:'USER_CONNECTION', payload: {managerId: manager.managerId, name: manager.name, password: manager.password}});
         }
         else{
           alert("שם משתמש או סיסמא אינם נכונים")

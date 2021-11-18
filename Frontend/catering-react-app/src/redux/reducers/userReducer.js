@@ -3,9 +3,10 @@ import produce from 'immer';
 
 const initialState = {
     connectedUser:{
+        managerId:5,
         name:"",
         password:""
-    },
+    }
 }
 
 const reducer = produce((state, action)=>{
