@@ -16,19 +16,19 @@ namespace BL
             this.productDL = _productDL;
         }
 
-        public async Task DeleteProductAsync(int id)
+        public async Task DeleteProductAsync(int id, int managerId)
         {
-            await productDL.DeleteProductAsync(id);
+            await productDL.DeleteProductAsync(id, managerId);
         }
 
-        public async Task<List<TblProducts>> GetAllAsync()
+        public async Task<List<TblProducts>> GetProductsAsync(int managerId)
         {
-            return await productDL.GetAllAsync();
+            return await productDL.GetProductsAsync(managerId);
         }
 
-        public async Task<TblProducts> GetProductAsync(int id)
+        public async Task<TblProducts> GetProductAsync(int id, int managerId)
         {
-            return await productDL.GetProductAsync(id);
+            return await productDL.GetProductAsync(id, managerId);
         }
 
         public async Task InsertProductAsync(TblProducts product)

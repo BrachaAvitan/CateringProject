@@ -27,3 +27,17 @@ C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProje
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.csproj.CopyComplete
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.dll
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.csprojAssemblyReference.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.AssemblyInfoInputs.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.AssemblyInfo.cs
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.csproj.CoreCompileInputs.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\BL.deps.json
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\BL.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\BL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\DAL.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\Entity.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\DAL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\bin\Debug\netcoreapp3.1\Entity.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\BL\obj\Debug\netcoreapp3.1\BL.csproj.CopyComplete

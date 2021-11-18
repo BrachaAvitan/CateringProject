@@ -8,19 +8,19 @@ namespace DAL
 {
     public interface IProductsToRecipeDL
     {
-        //Get All Product
-        Task<List<TblProductsToRecipe>> GetAllAsync();
+        //Get All ProductsToRecipe By managerId
+        Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId);
 
-        //Get Product By Id
-        Task<TblProductsToRecipe> GetProductToRecipeAsync(int id);
+        //Get ProductToRecipe By Id & managerId
+        Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId);
 
-        //Insert Product
+        //Insert ProductToRecipe
         Task InsertProductToRecipeAsync(TblProductsToRecipe product);
 
-        //Update Product
+        //Update ProductToRecipe
         Task UpdateProductToRecipeAsync(TblProductsToRecipe product);
 
-        //Delete Product
-        Task DeleteProductToRecipeAsync(int id);
+        //Delete ProductToRecipe
+        Task DeleteProductToRecipeAsync(int id, int managerId);
     }
 }

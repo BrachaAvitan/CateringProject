@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CateringEFCore.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProductToRecipeController : ControllerBase
     {
@@ -21,15 +21,15 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("ProductsToRecipe")]
-        public async Task<List<TblProductsToRecipe>> GetAll()
+        public async Task<List<TblProductsToRecipe>> GetAll(int managerId)
         {
-            return await productsToRecipeBL.GetAllAsync();
+            return await productsToRecipeBL.GetProductsToRecipeAsync(managerId);
         }
 
         [HttpGet("ProductToRecipeById")]
-        public async Task<TblProductsToRecipe> GetProductToRecipeById(int id)
+        public async Task<TblProductsToRecipe> GetProductToRecipeById(int id, int managerId)
         {
-            return await productsToRecipeBL.GetProductToRecipeAsync(id);
+            return await productsToRecipeBL.GetProductToRecipeAsync(id, managerId);
         }
 
         [HttpPost("InsertProductToRecipe")]
@@ -45,9 +45,9 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpDelete("DeleteProductToRecipe")]
-        public async Task DeleteProductToRecipe(int id)
+        public async Task DeleteProductToRecipe(int id, int managerId)
         {
-            await productsToRecipeBL.DeleteProductToRecipeAsync(id);
+            await productsToRecipeBL.DeleteProductToRecipeAsync(id, managerId);
         }
     }
 }

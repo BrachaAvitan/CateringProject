@@ -1322,7 +1322,8 @@
       },
       "DAL/1.0.0": {
         "dependencies": {
-          "Entity": "1.0.0"
+          "Entity": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.4"
         },
         "runtime": {
           "DAL.dll": {}

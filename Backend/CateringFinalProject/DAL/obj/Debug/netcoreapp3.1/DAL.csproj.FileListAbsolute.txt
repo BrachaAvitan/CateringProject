@@ -22,3 +22,15 @@ C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProje
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.dll
 C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\Entity.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\bin\Debug\netcoreapp3.1\Entity.pdb
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache

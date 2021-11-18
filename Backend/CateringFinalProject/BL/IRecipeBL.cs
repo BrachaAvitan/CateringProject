@@ -8,11 +8,11 @@ namespace BL
 {
     public interface IRecipeBL
     {
-        //Get All Recipes
-        Task<List<TblRecipes>> GetAllAsync();
+        //Get All Recipes By managerId
+        Task<List<TblRecipes>> GetRecipesAsync(int managerId);
 
-        //Get Recipe By Id
-        Task<TblRecipes> GetRecipeAsync(int id);
+        //Get Recipe By Id & managerId
+        Task<TblRecipes> GetRecipeAsync(int id, int managerId);
 
         //Insert Recipe
         Task InsertRecipeAsync(TblRecipes recipe);
@@ -21,6 +21,6 @@ namespace BL
         Task UpdateRecipeAsync(TblRecipes recipe);
 
         //Delete Recipe
-        Task DeleteRecipeAsync(int id);
+        Task DeleteRecipeAsync(int id, int managerId);
     }
 }

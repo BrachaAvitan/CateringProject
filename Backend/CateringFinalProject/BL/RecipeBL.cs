@@ -9,27 +9,27 @@ namespace BL
 {
     public class RecipeBL : IRecipeBL
     {
-        IRecipeDL RecipeDL;
+        private readonly IRecipeDL RecipeDL;
 
         public RecipeBL(IRecipeDL _RecipeDL)
         {
             this.RecipeDL = _RecipeDL;
         }
 
-        public async Task DeleteRecipeAsync(int id)
+        public async Task DeleteRecipeAsync(int id, int managerId)
         {
 
-            await RecipeDL.DeleteRecipeAsync(id);
+            await RecipeDL.DeleteRecipeAsync(id, managerId);
         }
 
-        public async Task<List<TblRecipes>> GetAllAsync()
+        public async Task<List<TblRecipes>> GetRecipesAsync(int managerId)
         {
-            return await RecipeDL.GetAllAsync();
+            return await RecipeDL.GetRecipesAsync(managerId);
         }
 
-        public async Task<TblRecipes> GetRecipeAsync(int id)
+        public async Task<TblRecipes> GetRecipeAsync(int id, int managerId)
         {
-            return await RecipeDL.GetRecipeAsync(id);
+            return await RecipeDL.GetRecipeAsync(id, managerId);
         }
 
         public async Task InsertRecipeAsync(TblRecipes recipe)

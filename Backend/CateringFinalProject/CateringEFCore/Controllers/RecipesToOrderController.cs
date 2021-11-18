@@ -11,11 +11,11 @@ namespace CateringEFCore.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RecipesToOrderController : ControllerBase
+    public class RecipeToOrderController : ControllerBase
     {
         public readonly IRecipesToOrderBL recipesToOrderBL;
 
-        public RecipesToOrderController(IRecipesToOrderBL _recipesToOrderBL)
+        public RecipeToOrderController(IRecipesToOrderBL _recipesToOrderBL)
         {
             this.recipesToOrderBL = _recipesToOrderBL;
         }
@@ -23,7 +23,7 @@ namespace CateringEFCore.Controllers
         [HttpGet("RecipesToOrder")]
         public async Task<List<TblRecipesToOrder>> GetAllAsync()
         {
-            return await recipesToOrderBL.GetAllAsync();
+            return await recipesToOrderBL.GetRecipesToOrderAsync();
         }
 
         [HttpGet("RecipeToOrderById")]
@@ -51,3 +51,4 @@ namespace CateringEFCore.Controllers
         }
     }
 }
+

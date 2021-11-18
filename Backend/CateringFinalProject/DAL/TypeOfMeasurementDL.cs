@@ -15,7 +15,7 @@ namespace DAL
         {
             this.db = _db;
         }
-        //מחיקת קטגוריה
+        //מחיקת סוג מדידה
         public async Task DeleteMeasurementsAsync(int id)
         {
             db.TblTypesOfMeasurements.Remove(db.TblTypesOfMeasurements.FirstOrDefault(t => t.TypeOfMeasurementId == id));

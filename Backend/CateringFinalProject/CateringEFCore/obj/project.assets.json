@@ -1437,14 +1437,18 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
-          "Entity": "1.0.0"
+          "Entity": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.4"
         },
         "compile": {
           "bin/placeholder/DAL.dll": {}
         },
         "runtime": {
           "bin/placeholder/DAL.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Entity/1.0.0": {
         "type": "project",
@@ -5335,11 +5339,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\CateringEFCore\\CateringEFCore.csproj",
+      "projectUniqueName": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\CateringEFCore\\CateringEFCore.csproj",
       "projectName": "CateringEFCore",
-      "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\CateringEFCore\\CateringEFCore.csproj",
+      "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\CateringEFCore\\CateringEFCore.csproj",
       "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
-      "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\CateringEFCore\\obj\\",
+      "outputPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\CateringEFCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5355,14 +5359,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj": {
-              "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj"
+            "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj": {
+              "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj"
             },
-            "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj"
+            "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj"
             },
-            "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
-              "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
+            "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
+              "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
             }
           }
         }

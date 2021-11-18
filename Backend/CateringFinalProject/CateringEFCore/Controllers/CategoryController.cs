@@ -10,7 +10,7 @@ using DAL;
 
 namespace CateringEFCore.Controllers
 {
- 
+
     [Route("[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -23,7 +23,8 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("Categories")]
-        public async Task<List<TblCategories>> GetAll(){
+        public async Task<List<TblCategories>> GetAll()
+        {
             return await categoriesBL.GetAllCategoriesAsync();
         }
 

@@ -6,7 +6,7 @@ using Entity.Models;
 
 namespace DAL
 {
-   public  interface ITypeOfMeasurement‏DL
+    public interface ITypeOfMeasurement‏DL
     {
         //קבלת כל סוגי המדידות
         Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync();
@@ -21,5 +21,5 @@ namespace DAL
     }
 }
 
-    
+
 

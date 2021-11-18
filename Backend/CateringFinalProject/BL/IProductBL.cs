@@ -8,11 +8,11 @@ namespace BL
 {
     public interface IProductBL
     {
-        //Get All Product
-        Task<List<TblProducts>> GetAllAsync();
+        //Get All Product By managerId
+        Task<List<TblProducts>> GetProductsAsync(int managerId);
 
-        //Get Product By Id
-        Task<TblProducts> GetProductAsync(int id);
+        //Get Product By Id & managerId
+        Task<TblProducts> GetProductAsync(int id, int managerId);
 
         //Insert Product
         Task InsertProductAsync(TblProducts product);
@@ -21,6 +21,6 @@ namespace BL
         Task UpdateProductAsync(TblProducts product);
 
         //Delete Product
-        Task DeleteProductAsync(int id);
+        Task DeleteProductAsync(int id, int managerId);
     }
 }

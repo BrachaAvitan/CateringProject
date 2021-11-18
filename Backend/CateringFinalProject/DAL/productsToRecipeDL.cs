@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class productsToRecipeDL: IProductsToRecipeDL
+    public class ProductsToRecipeDL : IProductsToRecipeDL
     {
         private readonly CateringDBContext db;
-        public productsToRecipeDL(CateringDBContext _db)
+
+        public ProductsToRecipeDL(CateringDBContext _db)
         {
             this.db = _db;
         }
-        public async Task DeleteProductToRecipeAsync(int id)
+        public async Task DeleteProductToRecipeAsync(int id, int managerId)
         {
-            db.TblProductsToRecipe.Remove(db.TblProductsToRecipe.FirstOrDefault(p => p.ProductToRecipeId == id));
+            db.TblProductsToRecipe.Remove(db.TblProductsToRecipe.FirstOrDefault(p => p.ProductToRecipeId == id && p.Product.ManagerId == managerId));
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<TblProductsToRecipe>> GetAllAsync()
+        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId)
         {
-            return await db.TblProductsToRecipe.ToListAsync();
+            return await db.TblProductsToRecipe.Where(p => p.Product.ManagerId == managerId).ToListAsync();
         }
 
-        public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id)
+        public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId)
         {
-            return await db.TblProductsToRecipe.FirstOrDefaultAsync(p => p.ProductToRecipeId== id);
+            return await db.TblProductsToRecipe.FirstOrDefaultAsync(p => p.ProductToRecipeId == id && p.Product.ManagerId == managerId);
         }
 
         public async Task InsertProductToRecipeAsync(TblProductsToRecipe product)
@@ -42,11 +43,9 @@ namespace DAL
             TblProductsToRecipe pUpdate = db.TblProductsToRecipe.FirstOrDefault(p => p.ProductToRecipeId == product.ProductToRecipeId);
             if (pUpdate != null)
             {
-                
+                pUpdate.ProductId = product.ProductId;
                 pUpdate.AmountToRecipe = product.AmountToRecipe;
-                pUpdate.ProductId= product.ProductId;
-                pUpdate.RecipesId= product.RecipesId;
-
+                pUpdate.RecipesId = product.RecipesId;
                 await db.SaveChangesAsync();
             }
         }

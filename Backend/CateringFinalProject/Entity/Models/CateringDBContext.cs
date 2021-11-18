@@ -75,6 +75,8 @@ namespace Entity.Models
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
                 entity.Property(e => e.NameOfEventOwner)
                     .IsRequired()
                     .HasColumnName("nameOfEventOwner")
@@ -88,6 +90,12 @@ namespace Entity.Models
                     .HasColumnName("toolsType")
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.TblDetailsEvent)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_detai__manag__2180FB33");
             });
 
             modelBuilder.Entity<TblDoseType>(entity =>
@@ -161,6 +169,8 @@ namespace Entity.Models
 
                 entity.Property(e => e.CategoryId).HasColumnName("categoryId");
 
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
                 entity.Property(e => e.ProductName)
                     .HasColumnName("productName")
                     .HasMaxLength(50)
@@ -176,6 +186,12 @@ namespace Entity.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tbl_Produ__categ__49C3F6B7");
 
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.TblProducts)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_Produ__manag__160F4887");
+
                 entity.HasOne(d => d.TypeOfMeasurement)
                     .WithMany(p => p.TblProducts)
                     .HasForeignKey(d => d.TypeOfMeasurementId)
@@ -186,13 +202,11 @@ namespace Entity.Models
             modelBuilder.Entity<TblProductsToRecipe>(entity =>
             {
                 entity.HasKey(e => e.ProductToRecipeId)
-                    .HasName("PK__tmp_ms_x__D3E0E767D42255BD");
+                    .HasName("PK__tmp_ms_x__D3E0E7676875D52D");
 
                 entity.ToTable("tbl_ProductsToRecipe");
 
-                entity.Property(e => e.ProductToRecipeId)
-                    .HasColumnName("productToRecipeId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.ProductToRecipeId).HasColumnName("productToRecipeId");
 
                 entity.Property(e => e.AmountToRecipe).HasColumnName("amountToRecipe");
 
@@ -204,12 +218,13 @@ namespace Entity.Models
                     .WithMany(p => p.TblProductsToRecipe)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_Produ__produ__4E88ABD4");
+                    .HasConstraintName("FK__tbl_Produ__produ__1332DBDC");
 
                 entity.HasOne(d => d.Recipes)
                     .WithMany(p => p.TblProductsToRecipe)
                     .HasForeignKey(d => d.RecipesId)
-                    .HasConstraintName("FK__tbl_Produ__recip__72C60C4A");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_Produ__recip__14270015");
             });
 
             modelBuilder.Entity<TblRecipes>(entity =>
@@ -223,6 +238,10 @@ namespace Entity.Models
 
                 entity.Property(e => e.DoseTypeId).HasColumnName("doseTypeId");
 
+                entity.Property(e => e.Instructions).HasColumnName("instructions");
+
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
                 entity.Property(e => e.MenuId).HasColumnName("menuId");
 
                 entity.Property(e => e.Name)
@@ -234,6 +253,12 @@ namespace Entity.Models
                     .WithMany(p => p.TblRecipes)
                     .HasForeignKey(d => d.DoseTypeId)
                     .HasConstraintName("FK__tbl_recip__doseT__70DDC3D8");
+
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.TblRecipes)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_recip__manag__17F790F9");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.TblRecipes)
@@ -260,12 +285,14 @@ namespace Entity.Models
                 entity.HasOne(d => d.Event)
                     .WithMany(p => p.TblRecipesToOrder)
                     .HasForeignKey(d => d.EventId)
-                    .HasConstraintName("FK__tbl_recip__event__05D8E0BE");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_recip__event__1BC821DD");
 
                 entity.HasOne(d => d.Recipes)
                     .WithMany(p => p.TblRecipesToOrder)
                     .HasForeignKey(d => d.RecipesId)
-                    .HasConstraintName("FK__tbl_recip__recip__71D1E811");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_recip__recip__1DB06A4F");
             });
 
             modelBuilder.Entity<TblTools>(entity =>
@@ -275,9 +302,17 @@ namespace Entity.Models
 
                 entity.ToTable("tbl_tools");
 
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
                 entity.Property(e => e.ToolName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.TblTools)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_tools__manag__1F98B2C1");
             });
 
             modelBuilder.Entity<TblTypesOfMeasurements>(entity =>

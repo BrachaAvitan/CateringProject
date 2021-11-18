@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class recipesToOrderDL : IRecipesToOrderDL
+    public class RecipesToOrderDL : IRecipesToOrderDL
     {
         private readonly CateringDBContext db;
-        public recipesToOrderDL(CateringDBContext _db)
+
+        public RecipesToOrderDL(CateringDBContext _db)
         {
             this.db = _db;
         }
@@ -20,7 +21,7 @@ namespace DAL
             db.TblRecipesToOrder.Remove(db.TblRecipesToOrder.FirstOrDefault(r => r.RecipesToOrderId == id));
             await db.SaveChangesAsync();
         }
-        public async Task<List<TblRecipesToOrder>> GetAllAsync()
+        public async Task<List<TblRecipesToOrder>> GetRecipesToOrderAsync()
         {
             return await db.TblRecipesToOrder.ToListAsync();
         }
@@ -41,7 +42,7 @@ namespace DAL
             TblRecipesToOrder rUpdate = db.TblRecipesToOrder.FirstOrDefault(r => r.RecipesToOrderId == recipe.RecipesToOrderId);
             if (rUpdate != null)
             {
-                rUpdate.Event = recipe.Event;
+                rUpdate.EventId = recipe.EventId;
                 rUpdate.RecipesId = recipe.RecipesId;
                 rUpdate.Amount = recipe.Amount;
                 await db.SaveChangesAsync();

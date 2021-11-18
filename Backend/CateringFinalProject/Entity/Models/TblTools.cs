@@ -9,5 +9,8 @@ namespace Entity.Models
         public string ToolName { get; set; }
         public int? OneTimeQuantity { get; set; }
         public int? AmountOfGlass { get; set; }
+        public int ManagerId { get; set; }
+
+        public virtual TblManager Manager { get; set; }
     }
 }

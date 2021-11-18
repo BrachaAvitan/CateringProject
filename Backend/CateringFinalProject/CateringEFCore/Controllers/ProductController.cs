@@ -21,15 +21,15 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("Products")]
-        public async Task<List<TblProducts>> GetAll()
+        public async Task<List<TblProducts>> GetAll(int managerId)
         {
-            return await productBL.GetAllAsync();
+            return await productBL.GetProductsAsync(managerId);
         }
 
         [HttpGet("ProductById")]
-        public async Task<TblProducts> GetProductById(int id)
+        public async Task<TblProducts> GetProductById(int id, int managerId)
         {
-            return await productBL.GetProductAsync(id);
+            return await productBL.GetProductAsync(id, managerId);
         }
 
         [HttpPost("InsertProduct")]
@@ -45,9 +45,9 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpDelete("DeleteProduct")]
-        public async Task DeleteProduct(int id)
+        public async Task DeleteProduct(int id, int managerId)
         {
-            await productBL.DeleteProductAsync(id);
+            await productBL.DeleteProductAsync(id, managerId);
         }
     }
 }

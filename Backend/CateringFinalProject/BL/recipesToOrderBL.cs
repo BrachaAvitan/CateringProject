@@ -7,21 +7,23 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class recipesToOrderBL : IRecipesToOrderBL
+    public class RecipesToOrderBL : IRecipesToOrderBL
     {
         private readonly IRecipesToOrderDL recipesToOrderDL;
-        public recipesToOrderBL(IRecipesToOrderDL _recipesToOrderDL)
+
+        public RecipesToOrderBL(IRecipesToOrderDL _recipesToOrderDL)
         {
             this.recipesToOrderDL = _recipesToOrderDL;
         }
+
         public async Task DeleteRecipeToOrderAsync(int id)
         {
             await recipesToOrderDL.DeleteRecipeToOrderAsync(id);
         }
 
-        public async Task<List<TblRecipesToOrder>> GetAllAsync()
+        public async Task<List<TblRecipesToOrder>> GetRecipesToOrderAsync()
         {
-            return await recipesToOrderDL.GetAllAsync();
+            return await recipesToOrderDL.GetRecipesToOrderAsync();
         }
 
         public async Task<TblRecipesToOrder> GetRecipeToOrderAsync(int id)

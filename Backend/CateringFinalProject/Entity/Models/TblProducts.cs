@@ -15,8 +15,10 @@ namespace Entity.Models
         public int CategoryId { get; set; }
         public int? QuantityInStock { get; set; }
         public int TypeOfMeasurementId { get; set; }
+        public int ManagerId { get; set; }
 
         public virtual TblCategories Category { get; set; }
+        public virtual TblManager Manager { get; set; }
         public virtual TblTypesOfMeasurements TypeOfMeasurement { get; set; }
         public virtual ICollection<TblProductsToRecipe> TblProductsToRecipe { get; set; }
     }

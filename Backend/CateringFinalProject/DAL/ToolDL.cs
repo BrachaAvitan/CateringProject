@@ -43,7 +43,7 @@ namespace DAL
         {
             TblTools tUpdate = await db.TblTools.FirstOrDefaultAsync(t => t.ToolId == tool.ToolId);
 
-            if (tUpdate!=null)
+            if (tUpdate != null)
             {
                 tUpdate.ToolName = tool.ToolName;
                 tUpdate.OneTimeQuantity = tool.OneTimeQuantity;

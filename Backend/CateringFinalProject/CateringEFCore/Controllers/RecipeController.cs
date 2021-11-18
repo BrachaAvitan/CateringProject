@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CateringEFCore.Controllers
 {
-    //לא לשכוח להעלות את זה לגיט
     [Route("[controller]")]
     [ApiController]
     public class RecipeController : ControllerBase
@@ -22,15 +21,15 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("Recipes")]
-        public async Task<List<TblRecipes>> GetAll()
+        public async Task<List<TblRecipes>> GetAll(int managerId)
         {
-            return await recipeBL.GetAllAsync();
+            return await recipeBL.GetRecipesAsync(managerId);
         }
 
         [HttpGet("RecipeById")]
-        public async Task<TblRecipes> GetRecipeById(int id)
+        public async Task<TblRecipes> GetRecipeById(int id, int managerId)
         {
-            return await recipeBL.GetRecipeAsync(id);
+            return await recipeBL.GetRecipeAsync(id, managerId);
         }
 
         [HttpPost("InsertRecipe")]
@@ -46,9 +45,9 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpDelete("DeleteRecipe")]
-        public async Task DeleteRecipe(int id)
+        public async Task DeleteRecipe(int id, int managerId)
         {
-            await recipeBL.DeleteRecipeAsync(id);
+            await recipeBL.DeleteRecipeAsync(id, managerId);
         }
     }
 }

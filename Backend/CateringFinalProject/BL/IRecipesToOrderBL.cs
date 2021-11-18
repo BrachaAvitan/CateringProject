@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-   public interface IRecipesToOrderBL
+    public interface IRecipesToOrderBL
     {
-        //Get All Recipes
-        Task<List<TblRecipesToOrder>> GetAllAsync();
+        //Get All RecipesToOrder
+        Task<List<TblRecipesToOrder>> GetRecipesToOrderAsync();
 
-        //Get Recipe By Id
+        //Get RecipeToOrder By Id
         Task<TblRecipesToOrder> GetRecipeToOrderAsync(int id);
 
-        //Insert Recipe
+        //Insert RecipeToOrder
         Task InsertRecipeToOrderAsync(TblRecipesToOrder recipe);
 
-        //Update Recipe
+        //Update RecipeToOrder
         Task UpdateRecipeToOrderAsync(TblRecipesToOrder recipe);
 
-        //Delete Recipe
+        //Delete RecipeToOrder
         Task DeleteRecipeToOrderAsync(int id);
     }
 }

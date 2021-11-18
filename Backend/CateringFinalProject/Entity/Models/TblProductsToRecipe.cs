@@ -7,8 +7,8 @@ namespace Entity.Models
     {
         public int ProductToRecipeId { get; set; }
         public int ProductId { get; set; }
-        public double? AmountToRecipe { get; set; }
-        public int? RecipesId { get; set; }
+        public double AmountToRecipe { get; set; }
+        public int RecipesId { get; set; }
 
         public virtual TblProducts Product { get; set; }
         public virtual TblRecipes Recipes { get; set; }

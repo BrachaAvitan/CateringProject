@@ -16,8 +16,11 @@ namespace Entity.Models
         public int? QuantityOfPortions { get; set; }
         public int MenuId { get; set; }
         public int? DoseTypeId { get; set; }
+        public string Instructions { get; set; }
+        public int ManagerId { get; set; }
 
         public virtual TblDoseType DoseType { get; set; }
+        public virtual TblManager Manager { get; set; }
         public virtual TblMenuTypes Menu { get; set; }
         public virtual ICollection<TblProductsToRecipe> TblProductsToRecipe { get; set; }
         public virtual ICollection<TblRecipesToOrder> TblRecipesToOrder { get; set; }

@@ -16,7 +16,9 @@ namespace Entity.Models
         public DateTime? Date { get; set; }
         public string ToolsType { get; set; }
         public int? NumberOfDose { get; set; }
+        public int ManagerId { get; set; }
 
+        public virtual TblManager Manager { get; set; }
         public virtual ICollection<TblRecipesToOrder> TblRecipesToOrder { get; set; }
     }
 }

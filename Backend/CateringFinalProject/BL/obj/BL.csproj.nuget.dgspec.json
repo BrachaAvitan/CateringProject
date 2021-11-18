@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj": {}
+    "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj": {}
   },
   "projects": {
-    "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj": {
+    "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj",
+        "projectUniqueName": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj",
         "projectName": "BL",
-        "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\BL.csproj",
+        "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\BL.csproj",
         "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
-        "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\BL\\obj\\",
+        "outputPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,11 +27,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj"
+              "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj"
               },
-              "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
+              "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
               }
             }
           }
@@ -55,6 +55,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -63,14 +66,14 @@
         }
       }
     },
-    "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
+    "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\DAL.csproj",
+        "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
-        "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\DAL\\obj\\",
+        "outputPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -86,8 +89,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
+              "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj"
               }
             }
           }
@@ -100,6 +103,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -111,6 +120,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -119,14 +131,14 @@
         }
       }
     },
-    "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
+    "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+        "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
         "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
-        "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\obj\\",
+        "outputPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",

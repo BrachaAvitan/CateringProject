@@ -4955,11 +4955,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+      "projectUniqueName": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
       "projectName": "Entity",
-      "projectPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
+      "projectPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\Entity.csproj",
       "packagesPath": "C:\\Users\\ברכי אביטן\\.nuget\\packages\\",
-      "outputPath": "C:\\2020\\HandashaYearB\\final-project\\Backend\\CateringFinalProject\\Entity\\obj\\",
+      "outputPath": "C:\\2020\\HandashaYearB\\Final-Project-New\\CateringProject\\Backend\\CateringFinalProject\\Entity\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ברכי אביטן\\AppData\\Roaming\\NuGet\\NuGet.Config",

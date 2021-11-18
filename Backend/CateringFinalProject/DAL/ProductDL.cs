@@ -17,20 +17,20 @@ namespace DAL
             this.db = _db;
         }
 
-        public async Task DeleteProductAsync(int id)
+        public async Task DeleteProductAsync(int id, int managerId)
         {
-            db.TblProducts.Remove(db.TblProducts.FirstOrDefault(p => p.ProductId == id));
+            db.TblProducts.Remove(db.TblProducts.FirstOrDefault(p => p.ProductId == id && p.ManagerId == managerId));
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<TblProducts>> GetAllAsync()
+        public async Task<List<TblProducts>> GetProductsAsync(int managerId)
         {
-            return await db.TblProducts.ToListAsync();
+            return await db.TblProducts.Where(p => p.ManagerId == managerId).ToListAsync();
         }
 
-        public async Task<TblProducts> GetProductAsync(int id)
+        public async Task<TblProducts> GetProductAsync(int id, int managerId)
         {
-            return await db.TblProducts.FirstOrDefaultAsync(p => p.ProductId == id);
+            return await db.TblProducts.FirstOrDefaultAsync(p => p.ProductId == id & p.ManagerId == managerId);
         }
 
         public async Task InsertProductAsync(TblProducts product)

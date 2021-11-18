@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-    public class productsToRecipeBL : IProductsToRecipeBL
+    public class ProductsToRecipeBL : IProductsToRecipeBL
     {
         private readonly IProductsToRecipeDL productsToRecipeDL;
-        public productsToRecipeBL(IProductsToRecipeDL _productsToRecipeDL)
+
+        public ProductsToRecipeBL(IProductsToRecipeDL _productsToRecipeDL)
         {
             this.productsToRecipeDL = _productsToRecipeDL;
         }
-        public async Task DeleteProductToRecipeAsync(int id)
+        public async Task DeleteProductToRecipeAsync(int id, int managerId)
         {
-            await productsToRecipeDL.DeleteProductToRecipeAsync(id);
+            await productsToRecipeDL.DeleteProductToRecipeAsync(id, managerId);
         }
 
-        public async Task<List<TblProductsToRecipe>> GetAllAsync()
+        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId)
         {
-            return await productsToRecipeDL.GetAllAsync();
+            return await productsToRecipeDL.GetProductsToRecipeAsync(managerId);
         }
 
-        public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id)
+        public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId)
         {
-            return await productsToRecipeDL.GetProductToRecipeAsync(id);
+            return await productsToRecipeDL.GetProductToRecipeAsync(id, managerId);
         }
 
         public async Task InsertProductToRecipeAsync(TblProductsToRecipe product)
