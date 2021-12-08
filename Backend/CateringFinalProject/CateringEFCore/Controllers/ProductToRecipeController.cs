@@ -21,9 +21,9 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("ProductsToRecipe")]
-        public async Task<List<TblProductsToRecipe>> GetAll(int managerId)
+        public async Task<List<TblProductsToRecipe>> GetAll(int recipeId, int managerId)
         {
-            return await productsToRecipeBL.GetProductsToRecipeAsync(managerId);
+            return await productsToRecipeBL.GetProductsToRecipeAsync(recipeId, managerId);
         }
 
         [HttpGet("ProductToRecipeById")]

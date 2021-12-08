@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BL;
 using Entity.Models;
+using Entity.DTO;
 
 namespace CateringEFCore.Controllers
 {
@@ -21,7 +22,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("TypeOfMeasurements")]
-        public async Task<List<TblTypesOfMeasurements>> GetAll()
+        public async Task<List<TypeOfMeasurementDTO>> GetAll()
         {
             return await typeOfMeasurementBL.GetAllMeasurementsAsync();
         }

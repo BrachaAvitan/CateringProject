@@ -11,6 +11,9 @@ namespace DAL
         //Get All RecipesToOrder
         Task<List<TblRecipesToOrder>> GetRecipesToOrderAsync();
 
+        //Get RecipesOfOrder of one event By eventId & managerId
+        Task<List<TblRecipesToOrder>> GetRecipesOfOneEventAsync(int eventId, int managerId);
+
         //Get RecipeToOrder By Id
         Task<TblRecipesToOrder> GetRecipeToOrderAsync(int id);
 

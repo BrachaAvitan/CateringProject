@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BL
    public interface ITypeOfMeasurementBL
     {
         //קבלת כל סוגי המדידות
-        Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync();
+        Task<List<TypeOfMeasurementDTO>> GetAllMeasurementsAsync();
         //קבלת סוג לפי מזהה מדידה
         Task<TblTypesOfMeasurements> GetMeasurementAsync(int id);
         //הוספה לטבלת מדידות

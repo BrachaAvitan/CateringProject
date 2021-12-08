@@ -26,6 +26,11 @@ namespace DAL
             return await db.TblRecipesToOrder.ToListAsync();
         }
 
+        public async Task<List<TblRecipesToOrder>> GetRecipesOfOneEventAsync(int eventId, int managerId)
+        {
+            return await db.TblRecipesToOrder.Where(r => r.EventId == eventId && r.Recipes.ManagerId == managerId).ToListAsync();
+        }
+
         public async Task<TblRecipesToOrder> GetRecipeToOrderAsync(int id)
         {
             return await db.TblRecipesToOrder.FirstOrDefaultAsync(r => r.RecipesToOrderId == id);

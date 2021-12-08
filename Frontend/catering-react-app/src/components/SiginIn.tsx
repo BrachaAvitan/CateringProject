@@ -113,6 +113,7 @@ export default function SignIn(props: any) {
       try{
         const manager :any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res=> res.data);
         if(manager){
+          history.push('/orders');
           alert(JSON.stringify(manager, null, 2));
           console.log(manager.name);
           dispatch({type:'USER_CONNECTION', payload: {managerId: manager.managerId, name: manager.name, password: manager.password}});

@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Entity.DTO;
 using Entity.Models;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace BL
              await typeOfMeasurementIdDL.DeleteMeasurementsAsync(id);
         }
 
-        public async Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync()
+        public async Task<List<TypeOfMeasurementDTO>> GetAllMeasurementsAsync()
         {
             return await typeOfMeasurementIdDL.GetAllMeasurementsAsync();
         }

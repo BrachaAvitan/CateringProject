@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Entity.DTO;
 using Entity.Models;
 
 namespace DAL
@@ -9,7 +10,7 @@ namespace DAL
     public interface ITypeOfMeasurement‏DL
     {
         //קבלת כל סוגי המדידות
-        Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync();
+        Task<List<TypeOfMeasurementDTO>> GetAllMeasurementsAsync();
         //קבלת סוג לפי מזהה מדידה
         Task<TblTypesOfMeasurements> GetMeasurementAsync(int id);
         //הוספה לטבלת מדידות

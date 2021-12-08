@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BL;
+using Entity.DTO;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("Recipes")]
-        public async Task<List<TblRecipes>> GetAll(int managerId)
+        public async Task<List<RecipeDTO>> GetAll(int managerId)
         {
             return await recipeBL.GetRecipesAsync(managerId);
         }

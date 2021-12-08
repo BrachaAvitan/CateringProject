@@ -20,9 +20,9 @@ namespace BL
             await productsToRecipeDL.DeleteProductToRecipeAsync(id, managerId);
         }
 
-        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId)
+        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int recipeId, int managerId)
         {
-            return await productsToRecipeDL.GetProductsToRecipeAsync(managerId);
+            return await productsToRecipeDL.GetProductsToRecipeAsync(recipeId, managerId);
         }
 
         public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId)

@@ -8,8 +8,8 @@ namespace BL
 {
     public interface IProductsToRecipeBL
     {
-        //Get All ProductsToRecipe By managerId
-        Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId);
+        //Get All ProductsToRecipe By recipeId & managerId
+        Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int recipeId, int managerId);
 
         //Get ProductToRecipe By Id & managerId
         Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId);

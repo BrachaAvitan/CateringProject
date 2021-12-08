@@ -4,23 +4,24 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import '../index.css';
 
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 // import { ProductService } from '../services/ProductService';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { FileUpload } from 'primereact/fileupload';
-import { Rating } from 'primereact/rating';
-import { Toolbar } from 'primereact/toolbar';
+// import { FileUpload } from 'primereact/fileupload';
+// import { Rating } from 'primereact/rating';
+// import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
+// import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import './Recipes.css';
+import './DateTableDemo.css';
 import { RecipeService } from '../services/RecipeService';
+import { ProductsToRecipeService } from '../services/ProductsToRecipeService';
 import RecipesDropdown from './RecipesDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -31,12 +32,24 @@ const Recipes = (props: any) => {
         name: '',
         quantityOfPortions: 0,
         menuId: 0,
-        doseTypeId:0,
-        instructions:'',
-        managerId:0,
+        doseTypeId: 0,
+        instructions: '',
+        managerId: 0,
         menu: {
             menuId: 0,
-            menuName:''
+            menuName: ''
+        }
+    };
+
+    let emptyProductToRecipe = {
+        amountToRecipe : 0,
+        product: {
+            productId: 0,
+            productName: ''
+        },
+        typeOfMesurement: {
+            typeOfMeasurementId: 0,
+            typeOfMeasurement: ''
         }
     };
 
@@ -52,12 +65,17 @@ const Recipes = (props: any) => {
     const dt = useRef<any>(null);
     //const productService = new ProductService();
     const recipeService = new RecipeService();
+    const productsToRecipeService = new ProductsToRecipeService();
     const [recipes, setRecipes] = useState<any>(null);
     const [recipe, setRecipe] = useState(emptyRecipe);
-    const [menuId, setMenuId] = useState<any>(0);
-    const connectedUser = useSelector((state: any)=> state.userReducer.connectedUser);
- 
+    const [productsToRecipe, setProductsToRecipe] = useState<any>(null);
+    const [productToRecipe, setProductToRecipe] = useState<any>(emptyProductToRecipe);
+    const [measurement, setMeasurement] = useState<any>(null);
+    const [menu, setMenu] = useState<any>(null);
+    const connectedUser = useSelector((state: any) => state.userReducer.connectedUser);
+
     useEffect(() => {
+        console.log('recipes reload');
         //productService.getProducts().then(data => setProducts(data));
         recipeService.getRecipes(connectedUser.managerId).then(data => setRecipes(data));
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -67,7 +85,9 @@ const Recipes = (props: any) => {
     // }
 
     const openNew = () => {
+        setProductsToRecipe(null);
         setRecipe(emptyRecipe);
+        setProductToRecipe(emptyProductToRecipe);
         setSubmitted(false);
         setProductDialog(true);
     }
@@ -90,32 +110,33 @@ const Recipes = (props: any) => {
 
         if (recipe.name.trim()) {
             let _recipes = [...recipes];
-            let _recipe = {...recipe};
+            let _recipe = { ...recipe };
             console.log(_recipe);
-            let rUpdate = {
-                RecipesId: _recipe.recipesId,
-                Name: _recipe.name,
-                QuantityOfPortions: _recipe.quantityOfPortions,
-                MenuId: menuId,
-                DoseTypeId:1,
-                Instructions:_recipe.instructions,
-                ManagerId: connectedUser.managerId
-            }
+            // let rUpdate = {
+            //     RecipesId: _recipe.recipesId,
+            //     Name: _recipe.name,
+            //     QuantityOfPortions: _recipe.quantityOfPortions,
+            //     MenuId: menu.menuId,
+            //     DoseTypeId:1,
+            //     Instructions:_recipe.instructions,
+            //     ManagerId: connectedUser.managerId,
+            //     Menu: menu
+            // }
             if (recipe.recipesId) {
                 const index = findIndexById(recipe.recipesId);
-                 console.log(_recipe);
+                console.log(_recipe);
                 _recipes[index] = _recipe;
                 //update recipe
-                 debugger
-                recipeService.updateRecipe(rUpdate);
-                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Updated', life: 3000 });
+                debugger
+                recipeService.updateRecipe(_recipe);
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Updated', life: 3000 });
             }
             else {
                 let rInsert = {
                     Name: _recipe.name,
                     QuantityOfPortions: _recipe.quantityOfPortions,
-                    MenuId: menuId,
-                    DoseTypeId:1,
+                    MenuId: _recipe.menuId,
+                    DoseTypeId: 1,
                     Instructions: _recipe.instructions,
                     ManagerId: connectedUser.managerId
                 }
@@ -134,25 +155,31 @@ const Recipes = (props: any) => {
         }
     }
 
-    const editProduct = (recipe:any) => {
-        setRecipe({...recipe});
+    const editProduct = (recipe: any) => {
+        productsToRecipeService.getProductsToRecipe(recipe.recipesId, connectedUser.managerId).then((data: any) => setProductsToRecipe(data));
+        debugger
+        setRecipe({ ...recipe });
         setProductDialog(true);
     }
 
-    const confirmDeleteProduct = (recipe:any) => {
+    const confirmAddProductToRecipe = () =>{
+        
+    }
+
+    const confirmDeleteProduct = (recipe: any) => {
         setRecipe(recipe);
         setDeleteProductDialog(true);
     }
 
     const deleteProduct = () => {
-        let _recipes = recipes.filter((val:any) => val.id !== recipe.recipesId);
+        let _recipes = recipes.filter((val: any) => val.id !== recipe.recipesId);
         setRecipe(_recipes);
         setDeleteProductDialog(false);
         setRecipe(emptyRecipe);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Deleted', life: 3000 });
     }
 
-    const findIndexById = (id:number) => {
+    const findIndexById = (id: number) => {
         let index = -1;
         for (let i = 0; i < recipes.length; i++) {
             if (recipes[i].recipesId === id) {
@@ -177,40 +204,70 @@ const Recipes = (props: any) => {
     }
 
     const deleteSelectedProducts = () => {
-        let _recipes = recipes.filter((val:any) => !selectedProducts.includes(val));
+        let _recipes = recipes.filter((val: any) => !selectedProducts.includes(val));
         setRecipes(_recipes);
         setDeleteProductsDialog(false);
         setSelectedProducts(null);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipes Deleted', life: 3000 });
     }
 
-    const onCategoryChange = (e:any) => {
-        let _recipes = {...recipes};
+    const onCategoryChange = (e: any) => {
+        let _recipes = { ...recipes };
         _recipes['quantityOfPortions'] = e.value;
         setRecipe(_recipes);
     }
 
-    const onInputChange = (e:any, name:any) => {
+    const onInputChange = (e: any, name: any) => {
         const val = (e.target && e.target.value) || '';
-        let _recipe : any = {...recipe};
+        let _recipe: any = { ...recipe };
         _recipe[`${name}`] = val;
 
         setRecipe(_recipe);
     }
 
-    const onInputNumberChange = (e:any, name:any) => {
+    const onInputNumberChange = (e: any, name: any) => {
         const val = (e.target && e.target.value) || 0;
-        let _recipe:any = {...recipe};
+        let _recipe: any = { ...recipe };
         _recipe[`${name}`] = val;
 
         setRecipe(_recipe);
     }
 
-    const OnChangeMenuId = (menuId:number) =>{
-        let _recipe:any = {...recipe};
-        _recipe.menuId = menuId;
-        setMenuId(menuId);
+    const OnChangeMenu = (menu: any) => {
+        let _recipe: any = { ...recipe };
+        _recipe.menuId = menu.menuId;
+        _recipe.menu.menuId = menu.menuId;
+        _recipe.menu.menuName = menu.menuName;
+        setMenu(menu);
+        setRecipe(_recipe);
     }
+
+    const OnChangeMeasurement = (measurement: any) => {
+        let _productToRecipe: any = { ...productToRecipe };
+        _productToRecipe.product.typeOfMeasurementId = measurement.typeOfMeasurementId;
+        _productToRecipe.product.typeOfMeasurement = measurement.typeOfMeasurement;
+        setMeasurement(measurement);
+        setProductToRecipe(_productToRecipe);
+    }
+
+    const onInputAmountToRecipeChange = (e: any, index: number) => {
+        debugger
+        const val = (e.target && e.target.value) || 0;
+        debugger
+        let _productsToRecipe: any = [ ...productsToRecipe ];
+        _productsToRecipe[index].amountToRecipe = val;
+        debugger
+        setProductsToRecipe(_productsToRecipe);
+        debugger
+    }
+
+    const onInputProductNameChange = (e: any, index: number) => {
+        const val = (e.target && e.target.value) || '';
+        // let _productsToRecipe: any = { ...productsToRecipe };
+        // _productsToRecipe[index].product.productName = val;
+        // setProductsToRecipe(_productsToRecipe);
+    }
+
     // const leftToolbarTemplate = () => {
     //     return (
     //         <React.Fragment>
@@ -245,7 +302,7 @@ const Recipes = (props: any) => {
     //     return <span className={`product-badge status-${rowData.inventoryStatus.toLowerCase()}`}>{rowData.inventoryStatus}</span>;
     // }
 
-    const actionBodyTemplate = (rowData:any) => {
+    const actionBodyTemplate = (rowData: any) => {
         return (
             <React.Fragment>
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success p-mr-2" onClick={() => editProduct(rowData)} />
@@ -257,15 +314,15 @@ const Recipes = (props: any) => {
     const header = (
         <div className="table-header">
             <>
-            <h5 className="p-mx-0 p-my-1">ניהול מתכונים</h5>
-            <span className="p-input-icon-left">
-                <i className="pi pi-search" />
-                <InputText type="search" onInput={(e:any) => setGlobalFilter(e.target.value)} placeholder="...חיפוש" />
-            </span>
+                <h5 className="p-mx-0 p-my-1">ניהול מתכונים</h5>
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText type="search" onInput={(e: any) => setGlobalFilter(e.target.value)} placeholder="...חיפוש" />
+                </span>
             </>
             <div>
-            <Button label="New" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={openNew} />
-            <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button label="New" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={openNew} />
+                <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         </div>
     );
@@ -300,20 +357,21 @@ const Recipes = (props: any) => {
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>
                     {/* <Column field="code" header="Code" sortable style={{ minWidth: '12rem' }}></Column> */}
                     {/* <Column field="recipesId" header="RecipesId" sortable style={{ minWidth: '10rem' }}></Column> */}
-                    <Column field="name" header="Name" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="name" header="שם מתכון" sortable style={{ minWidth: '10rem' }}></Column>
                     {/* <Column field="image" header="Image" body={imageBodyTemplate}></Column>
                     <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column> */}
-                    <Column field="quantityOfPortions" header="QuantityOfPortions" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="quantityOfPortions" header="מספר מנות" sortable style={{ minWidth: '10rem' }}></Column>
+                    <Column field="menu.menuName" header="סוג מנה" sortable style={{ minWidth: '10rem' }}></Column>
                     {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog visible={productDialog} style={{ width: '450px' }} header="Recipes Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
                 {/* {product.image && <img src={`showcase/demo/images/product/${product.image}`} onError={(e:any) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.image} className="product-image" />} */}
                 <div className="p-field">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">שם מתכון</label>
                     <InputText id="name" value={recipe.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !recipe.name })} />
                     {submitted && !recipe.name && <small className="p-error">Name is required.</small>}
                 </div>
@@ -340,29 +398,49 @@ const Recipes = (props: any) => {
                     </div>
                 </div> */}
 
-                <div className="p-formgrid p-grid">
+                {/* <div className="p-formgrid p-grid"> */}
                     {/* <div className="p-field p-col">
                         <label htmlFor="price">Price</label>
                         <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
                     </div> */}
-                    <div className="p-field p-col">
-                        <label htmlFor="quantityOfPortions">QuantityOfPortions</label>
+                    <div className="p-field">
+                        <label htmlFor="quantityOfPortions">מספר מנות</label>
                         <InputNumber id="quantityOfPortions" value={recipe.quantityOfPortions} onValueChange={(e) => onInputNumberChange(e, 'quantityOfPortions')} />
                     </div>
-                </div>
-                <div className="p-formgrid p-grid">
+                {/* </div> */}
+                {/* <div className="p-formgrid p-grid"> */}
                     {/* <div className="p-field p-col">
                         <label htmlFor="price">Price</label>
                         <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
                     </div> */}
-                    <div className="p-field p-col">
-                        <label htmlFor="recipesId">recipeId</label>
-                        <InputNumber id="recipesId" value={recipe.recipesId} onValueChange={(e) => onInputNumberChange(e, 'recipesId')} />
-                    </div>
+                {/* </div> */}
+                <div className="p-field">
+                    <label htmlFor="menu">סוג מנה</label>
+                    <RecipesDropdown id="menu" type="menu" menuType={recipe.menu} setMenu={OnChangeMenu} />
                 </div>
-                <div className="p-field p-col">
-                     <RecipesDropdown menuType={recipe.menu} setMenu={OnChangeMenuId}/>
-                </div>
+                {/* <div className="p-field"> */}
+                <label>החומרים למתכון:</label>
+                <Button icon="pi pi-plus" className="p-button-rounded p-button-warning" onClick={() => confirmAddProductToRecipe()} />
+                {
+                    productsToRecipe && productsToRecipe.map((productToRecipe: any, index: number) => {
+                        debugger
+                        return (
+                            <div className="p-formgrid p-grid" key={productToRecipe.productToRecipeId}>
+                                <div className="p-field p-col-2">
+                                    <InputNumber id="amountToRecipe" value={productToRecipe.amountToRecipe} onValueChange={(e) => onInputAmountToRecipeChange(e, index)} />
+                                </div>
+                                <div className="p-field p-col-4">
+                                    {/* <label htmlFor="typeOfMeasurement">{productToRecipe.product.typeOfMeasurement.typeOfMeasurement}</label> */}
+                                    <RecipesDropdown id="typeOfMeasurement" type="typeOfMeasurement" typeOfMeasurement={{typeOfMeasurementId : productToRecipe.product.typeOfMeasurementId, typeOfMeasurement: productToRecipe.product.typeOfMeasurement.typeOfMeasurement}} setMeasurement={OnChangeMeasurement} />
+                                </div>
+                                <div className="p-field p-col">
+                                    <InputText id="productName" value={productToRecipe.product.productName} onChange={(e) => onInputProductNameChange(e, index)} />
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+                {/* </div> */}
                 <div className="p-field">
                     <label htmlFor="instructions">הוראות הכנה</label>
                     <InputTextarea id="instructions" value={recipe.instructions} onChange={(e) => onInputChange(e, 'instructions')} required rows={3} cols={20} />
@@ -371,19 +449,19 @@ const Recipes = (props: any) => {
 
             <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
+                    <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
                     {recipe && <span>Are you sure you want to delete <b>{recipe.name}</b>?</span>}
                 </div>
             </Dialog>
 
             <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
+                    <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem' }} />
                     {recipe && <span>Are you sure you want to delete the selected products?</span>}
                 </div>
             </Dialog>
         </div>
     );
 }
-                
+
 export default Recipes;

@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DAL
     public interface IRecipeDL
     {
         //Get All Recipes By managerId
-        Task<List<TblRecipes>> GetRecipesAsync(int managerId);
+        Task<List<RecipeDTO>> GetRecipesAsync(int managerId);
 
         //Get Recipe By Id & managerId
         Task<TblRecipes> GetRecipeAsync(int id, int managerId);

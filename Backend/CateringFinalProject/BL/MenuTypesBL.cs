@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Entity.DTO;
 using Entity.Models;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace BL
             await menuTypesDL.DeleteMenuTypeAsync(id);
         }
 
-        public async Task<List<TblMenuTypes>> GetAllMenuTypesAsync()
+        public async Task<List<MenuTypeDTO>> GetAllMenuTypesAsync()
         {
             return await menuTypesDL.GetAllMenuTypesAsync();
         }

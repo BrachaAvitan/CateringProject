@@ -1,4 +1,6 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.DTO;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,9 +24,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
         //קבלת כל כמויות המדידה
-        public async Task<List<TblTypesOfMeasurements>> GetAllMeasurementsAsync()
+        public async Task<List<TypeOfMeasurementDTO>> GetAllMeasurementsAsync()
         {
-            return await db.TblTypesOfMeasurements.ToListAsync();
+            return await db.TblTypesOfMeasurements.Select(m => TypeOfMeasurementConverter.convertToTypeOfMeasurementDTO(m)).ToListAsync();
         }
         //  קבלת כמות מדידה לפי מזהה
         public async Task<TblTypesOfMeasurements> GetMeasurementAsync(int id)

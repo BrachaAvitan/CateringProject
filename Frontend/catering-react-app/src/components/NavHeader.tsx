@@ -14,6 +14,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Recipes from './Recipes';
+import Products from './Products';
+import Orders from './Orders';
 
 const useStylesNav = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,7 +73,9 @@ function NavHeader(){
           </Route>
         </Switch> */}
         <Switch>
-              <Route path="/Recipes" exact component={Recipes}></Route>
+              <Route path="/recipes" exact component={Recipes}></Route>
+              <Route path="/products" exact component={Products}></Route>
+              <Route path="/orders" exact component={Orders}></Route>
         </Switch>
         </>
     );

@@ -1,4 +1,6 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.DTO;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
         //קבלת כל סוגי תפריט
-        public async Task<List<TblMenuTypes>> GetAllMenuTypesAsync()
+        public async Task<List<MenuTypeDTO>> GetAllMenuTypesAsync()
         {
-            return await db.TblMenuTypes.ToListAsync();
+            return await db.TblMenuTypes.Select(m => MenuTypeConverter.convertToMenuTypeDTO(m)).ToListAsync();
         }
         //קבלת סוג תפריט לפי מזהה תפריט
         public async Task<TblMenuTypes> GetMenuTypeAsync(int id)

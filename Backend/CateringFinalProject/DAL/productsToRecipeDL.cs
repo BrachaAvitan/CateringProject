@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int managerId)
+        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int recipeId, int managerId)
         {
-            return await db.TblProductsToRecipe.Where(p => p.Product.ManagerId == managerId).ToListAsync();
+            return await db.TblProductsToRecipe.Where(p => p.RecipesId == recipeId && p.Product.ManagerId == managerId).Include(p => p.Product).ThenInclude(p => p.TypeOfMeasurement).ToListAsync();
         }
 
         public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId)

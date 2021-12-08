@@ -9,6 +9,8 @@ body {
   /* background-image: url('./catering.jpg');
   background-size: 90%;
   background-repeat: no-repeat; */
+  padding: .5em;
+  margin-bottom: 50px;
 }
 
 code {
@@ -220,4 +222,4 @@ img.flag {
 .p-button-success, .p-button{
   margin-left: 6px !important;
 }
-                  
+      

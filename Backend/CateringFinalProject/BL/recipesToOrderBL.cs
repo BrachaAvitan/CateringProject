@@ -26,6 +26,11 @@ namespace BL
             return await recipesToOrderDL.GetRecipesToOrderAsync();
         }
 
+        public async Task<List<TblRecipesToOrder>> GetRecipesOfOneEventAsync(int eventId, int managerId)
+        {
+            return await recipesToOrderDL.GetRecipesOfOneEventAsync(eventId, managerId);
+        }
+
         public async Task<TblRecipesToOrder> GetRecipeToOrderAsync(int id)
         {
             return await recipesToOrderDL.GetRecipeToOrderAsync(id);

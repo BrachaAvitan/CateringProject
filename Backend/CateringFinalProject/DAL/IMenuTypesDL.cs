@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DAL
     public interface IMenuTypesDL
     {
         //קבלת כל סוגי התפריטים
-        Task<List<TblMenuTypes>> GetAllMenuTypesAsync();
+        Task<List<MenuTypeDTO>> GetAllMenuTypesAsync();
         //קבלת סוג תפריט לפי מזהה סוג תפריט
         Task<TblMenuTypes> GetMenuTypeAsync(int id);
         //הוספה לטבלת סוגי תפריטים
