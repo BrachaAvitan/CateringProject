@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +16,7 @@ import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import api from '../api';
 import {
   BrowserRouter as Router,
@@ -24,6 +24,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Cookie } from '../Cookies';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -73,10 +74,10 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputLabel-outlined.Mui-focused": {
       color: "grey"
     },
-    "& .MuiFormLabel-root.Mui-error":{
+    "& .MuiFormLabel-root.Mui-error": {
       color: 'red !important'
     },
-    "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline":{
+    "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline": {
       color: 'red !important'
     }
   }
@@ -84,48 +85,92 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props: any) {
   const dispatch = useDispatch();
+  const connectedUser = useSelector((state: any) => state.userReducer.connectedUser);
   const history = props.history;
-
+  const cookie = new Cookie();
   const classes = useStyles();
+  const [userName, setUserName] = useState(connectedUser.name);
+  const [userPassword, setUserPassword] = useState(connectedUser.password);
+  const [changeUser, setChangeUser] = useState(false);
+  const [saveUser, setSaveUser] = useState(false);
 
   const validationSchema = Yup.object().shape({
     userName: Yup.string()
-        .required('UserName is required')
-        .min(6, 'UserName must be at least 6 characters')
-        .max(20, 'UserName must not exceed 20 characters'),
+      .required('UserName is required')
+      .min(6, 'UserName must be at least 6 characters')
+      .max(20, 'UserName must not exceed 20 characters'),
     password: Yup.string()
-        .required('Password is required')
-        .min(6, 'Password must be at least 6 characters')
-        .max(40, 'Password must not exceed 40 characters'),
-});
-
-  const {
-      register,
-      handleSubmit,
-      formState: { errors }
-  } = useForm({
-      resolver: yupResolver(validationSchema)
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters')
+      .max(40, 'Password must not exceed 40 characters'),
   });
 
-  //פונקציה שמכניסה משתמש
-  const onSubmit = async (data:any) =>{
-      console.log(JSON.stringify(data, null, 2));
-      try{
-        const manager :any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res=> res.data);
-        if(manager){
-          history.push('/orders');
-          alert(JSON.stringify(manager, null, 2));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  useEffect(() => {
+    if (cookie.getCookie("userId") && cookie.getCookie("userName") && cookie.getCookie("userPassword")) {
+      setUserName(cookie.getCookie("userName"));
+      setUserPassword(cookie.getCookie("userPassword"));
+      setSaveUser(true);
+    }
+  }, []);
+
+  const changeValueName = (e: any) => {
+    setChangeUser(true);
+    setUserName(e.target.value);
+  }
+  const changeValuePassword = (e: any) => {
+    setChangeUser(true);
+    setUserPassword(e.target.value);
+  }
+
+  const onChangeValueRemember = (e: any) => {
+    if (e.target.checked) {
+      e.target.value = "remember";
+      setSaveUser(true);
+    }
+    else {
+      e.target.value = "dontRemember";
+      setSaveUser(false);
+    }
+  }
+
+  //פונקציה שבודקת האם המשתמש קיים ומעבירה אותו לדף ניהול הזמנות
+  const onSubmit = async (data: any) => {
+    console.log(JSON.stringify(data, null, 2));
+    try {
+      const manager: any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res => res.data);
+      if (manager) {
+        //debugger
+        alert(JSON.stringify(manager, null, 2));
+        if (changeUser && saveUser) {
           console.log(manager.name);
-          dispatch({type:'USER_CONNECTION', payload: {managerId: manager.managerId, name: manager.name, password: manager.password}});
+          cookie.setCookie("userId", manager.managerId, 365);
+          cookie.setCookie("userName", manager.name, 365);
+          cookie.setCookie("userPassword", manager.password, 365);
         }
-        else{
-          alert("שם משתמש או סיסמא אינם נכונים")
-          history.push('/SiginIn');
+        else if(!saveUser){
+          cookie.deleteCookie("userId");
+          cookie.deleteCookie("userName");
+          cookie.deleteCookie("userPassword");
         }
+        dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.name, password: manager.password } });
+        history.push('/orders');
       }
-      catch{
-        
+      else {
+        alert("שם משתמש או סיסמא אינם נכונים")
+        history.push('/SiginIn');
       }
+    }
+    catch {
+
+    }
   }
 
   return (
@@ -136,7 +181,7 @@ export default function SignIn(props: any) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-           התחברות
+          התחברות
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -151,9 +196,11 @@ export default function SignIn(props: any) {
             autoFocus
             {...register('userName')}
             error={errors.userName ? true : false}
+            value={userName}
+            onChange={changeValueName}
           />
           <Typography variant="inherit" color="textSecondary">
-                        {errors.userName?.message}
+            {errors.userName?.message}
           </Typography>
           <TextField
             className={classes.root}
@@ -167,12 +214,14 @@ export default function SignIn(props: any) {
             autoComplete="current-password"
             {...register('password')}
             error={errors.password ? true : false}
+            value={userPassword}
+            onChange={changeValuePassword}
           />
           <Typography variant="inherit" color="textSecondary">
-                  {errors.password?.message}
+            {errors.password?.message}
           </Typography>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" onChange={onChangeValueRemember} checked ={saveUser} />}
             label="זכור אותי"
           />
           <Button

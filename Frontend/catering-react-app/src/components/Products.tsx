@@ -19,7 +19,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import './DateTableDemo.css';
+import './Recipes.css';
 import { ProductService } from '../services/ProductService';
 import { ProductsToRecipeService } from '../services/ProductsToRecipeService';
 import RecipesDropdown from './RecipesDropdown';
