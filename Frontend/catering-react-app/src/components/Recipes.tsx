@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-// import { ProductService } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 // import { FileUpload } from 'primereact/fileupload';
@@ -42,15 +42,19 @@ const Recipes = (props: any) => {
     };
 
     let emptyProductToRecipe = {
+        recipeId: 0,
+        productToRecipeId: 0,
         amountToRecipe : 0,
+        productId: 0,
         product: {
             productId: 0,
-            productName: ''
+            productName: '',
+            typeOfMeasurement: {
+                typeOfMeasurementId: 0,
+                typeOfMeasurement: ''
+            }
         },
-        typeOfMesurement: {
-            typeOfMeasurementId: 0,
-            typeOfMeasurement: ''
-        }
+        edit: false,
     };
 
     //const [products, setProducts] = useState<any>(null);
@@ -63,7 +67,7 @@ const Recipes = (props: any) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
-    //const productService = new ProductService();
+    const productService = new ProductService();
     const recipeService = new RecipeService();
     const productsToRecipeService = new ProductsToRecipeService();
     const [recipes, setRecipes] = useState<any>(null);
@@ -72,7 +76,15 @@ const Recipes = (props: any) => {
     const [productToRecipe, setProductToRecipe] = useState<any>(emptyProductToRecipe);
     const [measurement, setMeasurement] = useState<any>(null);
     const [menu, setMenu] = useState<any>(null);
+    const [productName, setProductName] = useState<any>(null);
     const connectedUser = useSelector((state: any) => state.userReducer.connectedUser);
+    const [amountToRecipe, setAmountToRecipe] = useState<any>(0);
+    const [edit, setEdit] = useState(false);
+    const [productsToRecipeUpdate, setProductsToRecipeUpdate]  = useState<any>(null);
+    const [numOfProductsToRecipe, setNumOfProductsToRecipe] = useState<number>(0);
+    const [recipe1, setRecipe1] = useState<any>(null);
+    const dispatch = useDispatch();
+    const products = useSelector((state: any) => state.recipesReducer.products);
 
     useEffect(() => {
         console.log('recipes reload');
@@ -85,7 +97,7 @@ const Recipes = (props: any) => {
     // }
 
     const openNew = () => {
-        setProductsToRecipe(null);
+        setProductsToRecipe([]);
         setRecipe(emptyRecipe);
         setProductToRecipe(emptyProductToRecipe);
         setSubmitted(false);
@@ -105,12 +117,14 @@ const Recipes = (props: any) => {
         setDeleteProductsDialog(false);
     }
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
         setSubmitted(true);
 
         if (recipe.name.trim()) {
             let _recipes = [...recipes];
             let _recipe = { ...recipe };
+            let _productsToRecipe = [...productsToRecipe];
+
             console.log(_recipe);
             // let rUpdate = {
             //     RecipesId: _recipe.recipesId,
@@ -129,6 +143,23 @@ const Recipes = (props: any) => {
                 //update recipe
                 debugger
                 recipeService.updateRecipe(_recipe);
+                _productsToRecipe.map((product:any, indexProduct:number)=>{
+                    debugger
+                    if(product.edit && indexProduct<numOfProductsToRecipe){
+                        debugger
+                        productsToRecipeService.updateProductToRecipe(product);
+                    }
+                    else if(indexProduct>=numOfProductsToRecipe && product.edit && product.amountToRecipe>0 && product.product){
+                        let productInsert = {
+                            AmountToRecipe: product.amountToRecipe,
+                            ProductId: product.productId,
+                            RecipesId: _recipe.recipesId
+                        }
+                        productsToRecipeService.insertProductToRecipe(productInsert);
+                    }
+                    else
+                       _productsToRecipe.splice(indexProduct,1);
+                });
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Updated', life: 3000 });
             }
             else {
@@ -141,13 +172,34 @@ const Recipes = (props: any) => {
                     ManagerId: connectedUser.managerId
                 }
                 //add recipe
-                recipeService.insertRecipe(rInsert);
-                // _recipe.image = 'product-placeholder.svg';
+                let recipeId: any = await recipeService.insertRecipe(rInsert);
+                debugger
+                if(recipeId){
+                    debugger
+                //add productsToRecipe
+                _productsToRecipe.map((product:any, indexProduct:number)=>{
+                    if(product.amountToRecipe>0 && product.product){
+                        debugger
+                        let productInsert = {
+                            AmountToRecipe: product.amountToRecipe,
+                            ProductId: product.productId,
+                            RecipesId: recipeId
+                        }
+                        productsToRecipeService.insertProductToRecipe(productInsert);
+                        product.recipeId = recipeId;
+                    }
+                    else
+                       _productsToRecipe.splice(indexProduct,1);
+                });
+                _recipe.recipesId = recipeId;
+                _recipe.doseTypeId = 1;
+                _recipe.managerId = connectedUser.managerId;
                 _recipes.push(_recipe);
                 console.log(_recipes);
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Created', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Created', life: 3000 });}
             }
             console.log(_recipes);
+            setProductsToRecipe(_productsToRecipe);
             setRecipes(_recipes);
             setProductDialog(false);
             setRecipe(emptyRecipe);
@@ -156,14 +208,37 @@ const Recipes = (props: any) => {
     }
 
     const editProduct = (recipe: any) => {
-        productsToRecipeService.getProductsToRecipe(recipe.recipesId, connectedUser.managerId).then((data: any) => setProductsToRecipe(data));
-        debugger
+        productsToRecipeService.getProductsToRecipe(recipe.recipesId, connectedUser.managerId).then((data: any) =>{setProductsToRecipe(data); setNumOfProductsToRecipe(data.length)});
+        if (!products.length) {
+            productService.getProducts(connectedUser.managerId).then((res: any) => dispatch({ type: 'SET_PRODUCTS', payload: res }));
+        }
+        //debugger
+        // let _productsToRecipe = [...productsToRecipe];
+        // _productsToRecipe.push(emptyProductToRecipe);
+        // setProductsToRecipe(_productsToRecipe);
         setRecipe({ ...recipe });
         setProductDialog(true);
     }
 
-    const confirmAddProductToRecipe = () =>{
-        
+    const editProductToRecipe = (index: number, productId: number) => {
+        //setEdit(true)
+        //לא לשכוח לבדוק איך להתעסק עם המוצרים למתכון זה נורא קשהההה
+        //כי צריך לשנות את הערכים וכו
+    }
+
+    const confirmAddProductToRecipe = () =>{ 
+        let _productsToRecipe = [...productsToRecipe ];
+        _productsToRecipe.push(emptyProductToRecipe);
+        debugger
+        setProductsToRecipe(_productsToRecipe);
+    }
+    const confirmDeleteProductToRecipe = (e:any, index: number) =>{
+        debugger
+        let _productsToRecipe = [...productsToRecipe ];
+        if(index<numOfProductsToRecipe)
+            productsToRecipeService.deleteProductToRecipe(_productsToRecipe[index].productToRecipeId, connectedUser.managerId);
+        _productsToRecipe.splice(index,1);
+        setProductsToRecipe(_productsToRecipe);
     }
 
     const confirmDeleteProduct = (recipe: any) => {
@@ -212,9 +287,9 @@ const Recipes = (props: any) => {
     }
 
     const onCategoryChange = (e: any) => {
-        let _recipes = { ...recipes };
-        _recipes['quantityOfPortions'] = e.value;
-        setRecipe(_recipes);
+        let _recipe = { ...recipe };
+        _recipe['quantityOfPortions'] = e.value;
+        setRecipe(_recipe);
     }
 
     const onInputChange = (e: any, name: any) => {
@@ -242,12 +317,26 @@ const Recipes = (props: any) => {
         setRecipe(_recipe);
     }
 
-    const OnChangeMeasurement = (measurement: any) => {
+    const OnChangeMeasurement = (measurement: any, index:number) => {
+        debugger
         let _productToRecipe: any = { ...productToRecipe };
         _productToRecipe.product.typeOfMeasurementId = measurement.typeOfMeasurementId;
         _productToRecipe.product.typeOfMeasurement = measurement.typeOfMeasurement;
         setMeasurement(measurement);
         setProductToRecipe(_productToRecipe);
+    }
+
+    const onChangeProduct = (product: any, index:number) => {
+        //כששומרים את המתכון לעבור גם על המוצרים למתכון ולעשות שמירה של המוצר וכו
+        setProductName(product);
+        let _productsToRecipe: any = [ ...productsToRecipe ];
+        _productsToRecipe[index].product = product;
+        _productsToRecipe[index].productId = product.productId;
+        _productsToRecipe[index].typeOfMeasurementId = product.typeOfMeasurementId;
+        _productsToRecipe[index].product.typeOfMeasurement.typeOfMeasurement = product.typeOfMeasurement.typeOfMeasurement;
+        _productsToRecipe[index].product.typeOfMeasurement.typeOfMeasurementId = product.typeOfMeasurement.typeOfMeasurementId;
+        _productsToRecipe[index].edit = true;
+        setProductToRecipe(_productsToRecipe);
     }
 
     const onInputAmountToRecipeChange = (e: any, index: number) => {
@@ -256,7 +345,7 @@ const Recipes = (props: any) => {
         debugger
         let _productsToRecipe: any = [ ...productsToRecipe ];
         _productsToRecipe[index].amountToRecipe = val;
-        debugger
+        _productsToRecipe[index].edit = true;
         setProductsToRecipe(_productsToRecipe);
         debugger
     }
@@ -423,20 +512,39 @@ const Recipes = (props: any) => {
                 <Button icon="pi pi-plus" className="p-button-rounded p-button-warning" onClick={() => confirmAddProductToRecipe()} />
                 {
                     productsToRecipe && productsToRecipe.map((productToRecipe: any, index: number) => {
-                        debugger
                         return (
+                            // edit? (
                             <div className="p-formgrid p-grid" key={productToRecipe.productToRecipeId}>
+                                <div className="p-field p-col-2">
+                                    <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={(e) => confirmDeleteProductToRecipe(e, index)}/>
+                                </div>
                                 <div className="p-field p-col-2">
                                     <InputNumber id="amountToRecipe" value={productToRecipe.amountToRecipe} onValueChange={(e) => onInputAmountToRecipeChange(e, index)} />
                                 </div>
-                                <div className="p-field p-col-4">
-                                    {/* <label htmlFor="typeOfMeasurement">{productToRecipe.product.typeOfMeasurement.typeOfMeasurement}</label> */}
-                                    <RecipesDropdown id="typeOfMeasurement" type="typeOfMeasurement" typeOfMeasurement={{typeOfMeasurementId : productToRecipe.product.typeOfMeasurementId, typeOfMeasurement: productToRecipe.product.typeOfMeasurement.typeOfMeasurement}} setMeasurement={OnChangeMeasurement} />
+                                <div className="p-field p-col-2">
+                                    <label htmlFor="typeOfMeasurement">{productToRecipe.product.typeOfMeasurement.typeOfMeasurement}</label>
+                                    {/* <RecipesDropdown id="typeOfMeasurement" type="typeOfMeasurement" typeOfMeasurement={productToRecipe.product.typeOfMeasurement ?{typeOfMeasurementId : productToRecipe.product.typeOfMeasurement.typeOfMeasurementId, typeOfMeasurement: productToRecipe.product.typeOfMeasurement.typeOfMeasurement}:null} setMeasurement={(measurement: any, index:number) => OnChangeMeasurement(measurement, index)} index = {index}/> */}
                                 </div>
                                 <div className="p-field p-col">
-                                    <InputText id="productName" value={productToRecipe.product.productName} onChange={(e) => onInputProductNameChange(e, index)} />
+                                    <RecipesDropdown id="productName" type="product" product={productToRecipe.product} setProduct={(product:any, index:number) => onChangeProduct(product, index)} index = {index}/>
+                                    {/* <InputText id="productName" value={productToRecipe.product.productName} onChange={(e) => onInputProductNameChange(e, index)} /> */}
                                 </div>
                             </div>
+                            // ) : 
+                            // (
+                            // <div className="p-formgrid p-grid" key={productToRecipe.productToRecipeId}>
+                            //     <div className="p-field p-col-2">
+                            //         <span>{productToRecipe.amountToRecipe}</span>
+                            //     </div>
+                            //     <div className="p-field p-col-4">
+                            //         <span>{productToRecipe.product.typeOfMeasurement.typeOfMeasurement}</span>
+                            //     </div>
+                            //     <div className="p-field p-col">
+                            //         <span>{productToRecipe.product.productName}</span>
+                            //     </div>
+                            //      <Button icon="pi pi-pencil" className="p-button-rounded p-button-warning" onClick={() => editProductToRecipe(index, productToRecipe.productToRecipeId)} />
+                            // </div>
+                            // )
                         )
                     })
                 }

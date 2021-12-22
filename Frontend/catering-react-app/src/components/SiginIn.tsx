@@ -90,7 +90,7 @@ export default function SignIn(props: any) {
   const cookie = new Cookie();
   const classes = useStyles();
   const [userName, setUserName] = useState(connectedUser.name);
-  const [userPassword, setUserPassword] = useState(connectedUser.password);
+  const [password, setPassword] = useState(connectedUser.password);
   const [changeUser, setChangeUser] = useState(false);
   const [saveUser, setSaveUser] = useState(false);
 
@@ -116,7 +116,7 @@ export default function SignIn(props: any) {
   useEffect(() => {
     if (cookie.getCookie("userId") && cookie.getCookie("userName") && cookie.getCookie("userPassword")) {
       setUserName(cookie.getCookie("userName"));
-      setUserPassword(cookie.getCookie("userPassword"));
+      setPassword((cookie.getCookie("userPassword")).toString());
       setSaveUser(true);
     }
   }, []);
@@ -127,7 +127,7 @@ export default function SignIn(props: any) {
   }
   const changeValuePassword = (e: any) => {
     setChangeUser(true);
-    setUserPassword(e.target.value);
+    setPassword(e.target.value);
   }
 
   const onChangeValueRemember = (e: any) => {
@@ -214,7 +214,7 @@ export default function SignIn(props: any) {
             autoComplete="current-password"
             {...register('password')}
             error={errors.password ? true : false}
-            value={userPassword}
+            value={password}
             onChange={changeValuePassword}
           />
           <Typography variant="inherit" color="textSecondary">
