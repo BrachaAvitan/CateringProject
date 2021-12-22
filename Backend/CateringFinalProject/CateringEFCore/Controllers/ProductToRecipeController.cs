@@ -1,4 +1,5 @@
 ﻿using BL;
+using Entity.DTO;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("ProductsToRecipe")]
-        public async Task<List<TblProductsToRecipe>> GetAll(int recipeId, int managerId)
+        public async Task<List<ProductToRecipeDTO>> GetAll(int recipeId, int managerId)
         {
             return await productsToRecipeBL.GetProductsToRecipeAsync(recipeId, managerId);
         }

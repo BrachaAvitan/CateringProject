@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Entity.DTO;
 using Entity.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace BL
             await productsToRecipeDL.DeleteProductToRecipeAsync(id, managerId);
         }
 
-        public async Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int recipeId, int managerId)
+        public async Task<List<ProductToRecipeDTO>> GetProductsToRecipeAsync(int recipeId, int managerId)
         {
             return await productsToRecipeDL.GetProductsToRecipeAsync(recipeId, managerId);
         }

@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BL
     public interface IProductsToRecipeBL
     {
         //Get All ProductsToRecipe By recipeId & managerId
-        Task<List<TblProductsToRecipe>> GetProductsToRecipeAsync(int recipeId, int managerId);
+        Task<List<ProductToRecipeDTO>> GetProductsToRecipeAsync(int recipeId, int managerId);
 
         //Get ProductToRecipe By Id & managerId
         Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId);

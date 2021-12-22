@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DAL
     public interface IProductDL
     {
         //Get All Product By managerId
-        Task<List<TblProducts>> GetProductsAsync(int managerId);
+        Task<List<ProductDTO>> GetProductsAsync(int managerId);
 
         //Get Product By Id & managerId
         Task<TblProducts> GetProductAsync(int id, int managerId);

@@ -1,4 +1,6 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.DTO;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
 
-        public async Task<List<TblProducts>> GetProductsAsync(int managerId)
+        public async Task<List<ProductDTO>> GetProductsAsync(int managerId)
         {
-            return await db.TblProducts.Where(p => p.ManagerId == managerId).ToListAsync();
+            return await db.TblProducts.Where(p => p.ManagerId == managerId).Include(p=> p.TypeOfMeasurement).Select(p => ProductConverter.ConvertToProductDTO(p)).ToListAsync();
         }
 
         public async Task<TblProducts> GetProductAsync(int id, int managerId)

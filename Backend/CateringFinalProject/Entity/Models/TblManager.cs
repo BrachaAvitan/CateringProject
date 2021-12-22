@@ -16,8 +16,11 @@ namespace Entity.Models
         public int ManagerId { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
+        public string PasswordSalt { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public bool Active { get; set; }
+        public bool Blocked { get; set; }
 
         public virtual ICollection<TblDetailsEvent> TblDetailsEvent { get; set; }
         public virtual ICollection<TblProducts> TblProducts { get; set; }

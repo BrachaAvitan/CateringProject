@@ -16,7 +16,7 @@ namespace DAL
         Task<TblRecipes> GetRecipeAsync(int id, int managerId);
 
         //Insert Recipe
-        Task InsertRecipeAsync(TblRecipes recipe);
+        Task<int> InsertRecipeAsync(TblRecipes recipe);
 
         //Update Recipe
         Task UpdateRecipeAsync(TblRecipes recipe);

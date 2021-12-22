@@ -33,9 +33,9 @@ namespace BL
             return await RecipeDL.GetRecipeAsync(id, managerId);
         }
 
-        public async Task InsertRecipeAsync(TblRecipes recipe)
+        public async Task<int> InsertRecipeAsync(TblRecipes recipe)
         {
-            await RecipeDL.InsertRecipeAsync(recipe);
+            return await RecipeDL.InsertRecipeAsync(recipe);
         }
 
         public async Task UpdateRecipeAsync(TblRecipes recipe)

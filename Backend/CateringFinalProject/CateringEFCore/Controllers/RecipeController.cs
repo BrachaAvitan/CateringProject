@@ -34,9 +34,9 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpPost("InsertRecipe")]
-        public async Task InsertRecipe(TblRecipes recipe)
+        public async Task<int> InsertRecipe(TblRecipes recipe)
         {
-            await recipeBL.InsertRecipeAsync(recipe);
+            return await recipeBL.InsertRecipeAsync(recipe);
         }
 
         [HttpPut("UpdateRecipe")]

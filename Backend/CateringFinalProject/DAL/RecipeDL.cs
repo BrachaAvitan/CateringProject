@@ -36,10 +36,13 @@ namespace DAL
             return await db.TblRecipes.FirstOrDefaultAsync(r => r.RecipesId == id && r.ManagerId == managerId);
         }
 
-        public async Task InsertRecipeAsync(TblRecipes recipe)
+        public async Task<int> InsertRecipeAsync(TblRecipes recipe)
         {
             await db.TblRecipes.AddAsync(recipe);
             await db.SaveChangesAsync();
+            List<RecipeDTO> recipes = await GetRecipesAsync(recipe.ManagerId);
+            RecipeDTO[] r = recipes.ToArray();
+            return r[r.Length-1].RecipesId;
         }
 
         public async Task UpdateRecipeAsync(TblRecipes recipe)

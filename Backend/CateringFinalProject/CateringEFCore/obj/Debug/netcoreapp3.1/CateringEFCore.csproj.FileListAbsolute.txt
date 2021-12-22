@@ -129,8 +129,6 @@ C:\Users\USER\Documents\final-project\CateringProject\Backend\CateringFinalProje
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.csprojAssemblyReference.cache
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.AssemblyInfoInputs.cache
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.AssemblyInfo.cs
-C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.csproj.CoreCompileInputs.cache
-C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.MvcApplicationPartsAssemblyInfo.cache
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.dll
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.pdb
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\appsettings.Development.json
@@ -190,3 +188,12 @@ C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalPro
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\staticwebassets\CateringEFCore.StaticWebAssets.Manifest.cache
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\staticwebassets\CateringEFCore.StaticWebAssets.xml
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.genruntimeconfig.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.csproj.CoreCompileInputs.cache
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.MvcApplicationPartsAssemblyInfo.cache
