@@ -3,28 +3,47 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@hookform/resolvers": "^2.8.2",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.23.0",
     "bootstrap": "^5.1.3",
+    "file-saver": "^2.0.5",
+    "final-form": "^4.20.6",
+    "jspdf": "^2.5.0",
+    "jspdf-autotable": "^3.5.23",
+    "jss-rtl": "^0.3.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
     "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",
     "primereact": "^7.0.1",
     "react": "^17.0.2",
+    "react-big-calendar": "^0.38.2",
     "react-bootstrap": "^2.0.0",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^17.0.2",
+    "react-final-form": "^6.5.7",
     "react-hook-form": "^7.17.5",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
+    "styled-components": "^5.3.3",
+    "stylis": "^4.0.13",
+    "stylis-plugin-rtl": "^2.1.1",
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2",
+    "xlsx": "^0.17.4",
     "yup": "^0.32.11"
   },
   "scripts": {
@@ -52,6 +71,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "@types/styled-components": "^5.1.19"
   }
 }

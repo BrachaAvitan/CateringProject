@@ -21,7 +21,6 @@ export class Cookie {
     deleteCookie(name) {
         let date = new Date();
         console.log(date);
-        debugger
         date.setTime(date.getFullYear() - 100);
         let expires = "expires=" + date.toUTCString();
         document.cookie = name + "=;" + expires + ";path=/";

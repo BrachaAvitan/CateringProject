@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-top: 38px;
 }
 .link {
   text-decoration: none;
@@ -12,8 +13,76 @@
 .link:focus{
   color: white;
 }
-.p-button{
+.p-button, .p-button-success, .p-button-danger{
   background-color: rgb(66, 64, 64) !important;
   color: white !important;
   border-color: rgb(66, 64, 64) !important;
+}
+.rbc-event:focus{
+  background-color: rgb(66, 64, 64) !important;
+}
+.rbc-event, .rbc-selected{
+  background-color: rgb(66, 64, 64) !important;
+}
+.p-datatable .p-datatable-thead > tr > th{
+  text-align: right !important;
+}
+.p-datatable .p-datatable-tbody > tr > td{
+  text-align: right !important;
+}
+.p-edit{
+  display: flex;
+  justify-content: left;
+}
+.header-events{
+  display: flex;
+  justify-content: center;
+  margin-right: 30%;
+  margin-bottom: -30px;
+}
+.p-button-css{
+  margin-right:29% !important;
+}
+.buttonCalendar{
+  background-color: rgba(216, 93, 93, 0.973) !important;
+}
+.sign-style{
+  background-color: #fff;
+  padding-top: 5px;
+  padding-bottom: 25px;
+  border-radius: 6px;
+}
+.link-sign{
+  color: gray;
+}
+.MuiCheckbox-colorSecondary.Mui-checked{
+  color: gray !important;
+}
+.remember-button{
+  display: flex;
+  justify-content: right;
+}
+.MuiFormControlLabel-root {
+  margin-right: -10px !important;
+}
+.calendar-css{
+  background-color: rgba(138, 129, 129, 0.582);
+  direction: ltr;
+}
+.p-button-warning{
+  background-color: rgba(216, 93, 93, 0.973) !important;
+  border-color: rgba(216, 93, 93, 0.973) !important;
+}
+/* .rbc-day-bg{
+  border-left: 1px solid #ddd;
+} */
+/* .container{
+  margin-right: 5px !important;
+  margin-left: 5px !important;
+} */
+.me-auto{
+  margin-left: 15px !important;
+}
+.navbar-toggler{
+  margin-left: 15px;
 }

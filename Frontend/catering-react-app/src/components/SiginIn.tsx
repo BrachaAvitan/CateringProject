@@ -17,6 +17,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { StyleSheetManager } from 'styled-components';
+import rtlPlugin from 'stylis-plugin-rtl';
+
 import api from '../api';
 import {
   BrowserRouter as Router,
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     // backgroundColor: theme.palette.secondary.main,
-    backgroundColor: 'rgba(223, 152, 20, 0.925)'
+    backgroundColor: 'rgba(216, 93, 93, 0.973)'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -57,7 +60,8 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "grey"
     },
     "& .MuiOutlinedInput-input": {
-      color: "rgba(128, 128, 128, 0.493)"
+       color: "rgba(128, 128, 128, 0.493)"
+      // color: "rgba(128, 128, 128, 0.493)"
     },
     "&:hover .MuiOutlinedInput-input": {
       color: "grey"
@@ -96,13 +100,13 @@ export default function SignIn(props: any) {
 
   const validationSchema = Yup.object().shape({
     userName: Yup.string()
-      .required('UserName is required')
-      .min(6, 'UserName must be at least 6 characters')
-      .max(20, 'UserName must not exceed 20 characters'),
+      .required('שדה חובה')
+      .min(6, 'שם משתמש חייב להיות לפחות 6 תווים')
+      .max(20, 'שם משתמש לא יכול להיות יותר מ20 תווים'),
     password: Yup.string()
-      .required('Password is required')
-      .min(6, 'Password must be at least 6 characters')
-      .max(40, 'Password must not exceed 40 characters'),
+      .required('שדה חובה')
+      .min(6, 'סיסמא חייבת להיות לפחות 6 תווים')
+      .max(40, 'הסיסמא לא יכולה להיות יותר מ40 תווים'),
   });
 
   const {
@@ -116,7 +120,7 @@ export default function SignIn(props: any) {
   useEffect(() => {
     if (cookie.getCookie("userId") && cookie.getCookie("userName") && cookie.getCookie("userPassword")) {
       setUserName(cookie.getCookie("userName"));
-      setPassword((cookie.getCookie("userPassword")).toString());
+      setPassword(cookie.getCookie("userPassword"));
       setSaveUser(true);
     }
   }, []);
@@ -148,7 +152,7 @@ export default function SignIn(props: any) {
       const manager: any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res => res.data);
       if (manager) {
         //debugger
-        alert(JSON.stringify(manager, null, 2));
+        //alert(JSON.stringify(manager, null, 2));
         if (changeUser && saveUser) {
           console.log(manager.name);
           cookie.setCookie("userId", manager.managerId, 365);
@@ -161,7 +165,7 @@ export default function SignIn(props: any) {
           cookie.deleteCookie("userPassword");
         }
         dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.name, password: manager.password } });
-        history.push('/orders');
+        history.push('/');
       }
       else {
         alert("שם משתמש או סיסמא אינם נכונים")
@@ -174,7 +178,7 @@ export default function SignIn(props: any) {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="sign-style">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -219,11 +223,13 @@ export default function SignIn(props: any) {
           />
           <Typography variant="inherit" color="textSecondary">
             {errors.password?.message}
-          </Typography>
+          </Typography><br></br>
+          <div className="remember-button">
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" onChange={onChangeValueRemember} checked ={saveUser} />}
+            control={<Checkbox value="remember" onChange={onChangeValueRemember} checked ={saveUser} />}
             label="זכור אותי"
           />
+          </div>
           <Button
             type="submit"
             fullWidth
@@ -235,12 +241,12 @@ export default function SignIn(props: any) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/passwordForget">
+              <Link to="/passwordForget" className="link-sign">
                 שכחת סיסמא?
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/SiginUp">
+              <Link to="/SiginUp" className="link-sign">
                 {"אין לך חשבון? הרשמה"}
               </Link>
             </Grid>

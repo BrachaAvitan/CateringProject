@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     // backgroundColor: theme.palette.secondary.main,
-    backgroundColor: 'rgba(223, 152, 20, 0.925)'
+    backgroundColor: 'rgba(216, 93, 93, 0.973)'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -43,9 +43,42 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-   root:{
-      
-   }
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey"
+    },
+    "& .MuiOutlinedInput-input": {
+       color: "rgba(128, 128, 128, 0.493)"
+      // color: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "grey"
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "grey"
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "rgba(128, 128, 128, 0.493)"
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "grey"
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "grey"
+    },
+    "& .MuiFormLabel-root.Mui-error": {
+      color: 'red !important'
+    },
+    "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline": {
+      color: 'red !important'
+    }
+  }
 }));
 
 export default function SignUp(props: any) {
@@ -86,7 +119,8 @@ export default function SignUp(props: any) {
       const newManager = {
         name: data.userName,
         email: data.email,
-        password: data.password
+        password: data.password,
+        // phoneNumber: data.phoneNumber
       }
       try{
           await api.post(`/Manager/InsertManager`,newManager).then(res=> res.data);
@@ -101,7 +135,7 @@ export default function SignUp(props: any) {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="sign-style">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -136,6 +170,7 @@ export default function SignUp(props: any) {
                 autoComplete="userName"
                 {...register('userName')}
                 error={errors.userName ? true : false}
+                className={classes.root}
               />
             </Grid>
             <Grid item xs={12}>
@@ -148,6 +183,7 @@ export default function SignUp(props: any) {
                 autoComplete="email"
                 {...register('email')}
                 error={errors.email ? true : false}
+                className={classes.root}
               />
             </Grid>
             <Grid item xs={12}>
@@ -161,14 +197,15 @@ export default function SignUp(props: any) {
                 autoComplete="current-password"
                 {...register('password')}
                 error={errors.password ? true : false}
+                className={classes.root}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="אני מעוניין לקבל הודעות ועדכונים באמצעות הדואר האלקטרוני"
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             type="submit"
@@ -182,7 +219,7 @@ export default function SignUp(props: any) {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/SiginIn">
+              <Link to="/SiginIn" className="link-sign">
                כבר יש לך חשבון? התחברות
               </Link>
             </Grid>
