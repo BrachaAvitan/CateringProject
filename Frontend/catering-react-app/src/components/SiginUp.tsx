@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import api from '../api';
 import {
   BrowserRouter as Router,
@@ -23,6 +23,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { ManagerService } from '../services/ManagerService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "grey"
     },
     "& .MuiOutlinedInput-input": {
-       color: "rgba(128, 128, 128, 0.493)"
+      color: "rgba(128, 128, 128, 0.493)"
       // color: "rgba(128, 128, 128, 0.493)"
     },
     "&:hover .MuiOutlinedInput-input": {
@@ -77,6 +78,11 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline": {
       color: 'red !important'
+    },
+    "& .MuiInputLabel-formControl": {
+      right: '0',
+      marginRight: '20px',
+      left: 'auto !important'
     }
   }
 }));
@@ -85,53 +91,80 @@ export default function SignUp(props: any) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = props.history;
+  // const [isUserNameExist, setIsUserNameExist] = useState<any>(undefined);
+  const [userNameExistError, setUserNameExistError] = useState<any>(undefined);
+  const managerService = new ManagerService();
+  const timerRef = useRef<any>(null);
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string()
-        .required('Name is required')
-        .min(6, 'Name must be at least 6 characters')
-        .max(20, 'Name must not exceed 20 characters'),
+    fullName: Yup.string()
+      .required('שדה חובה')
+      .min(5, 'חייב להיות לפחות 5 תווים כולל רווח')
+      .max(30, 'לא יכול להיות יותר מ-30 תווים')
+      .matches(/^[א-תa-zA-Z]{2,} [א-תa-zA-Z]{2,}$/, 'מכיל רווח בין השם לשם משפחה'),
     userName: Yup.string()
-        .required('Name is required')
-        .min(6, 'Name must be at least 6 characters')
-        .max(20, 'Name must not exceed 20 characters'),
+      .required('שדה חובה')
+      .min(6, 'שם משתמש חייב להיות לפחות 6 תווים')
+      .max(20, 'שם משתמש לא יכול להיות יותר מ20 תווים')
+      .matches(/^[a-zA-Z]+$/, 'שם משתמש ללא רווח ומכיל רק אותיות באנגלית'),
     email: Yup.string()
-        .required('email is required'),
-        // .min(6, 'email must be at least 6 characters')
-        // .max(20, 'email must not exceed 20 characters'),
+      .required('שדה חובה')
+      .matches(/^[a-zA-z0-9.]{6,}@[a-zA-Z]{2,}.[a-zA-Z]{2,}$/, "מייל לא תקין"),
+    phoneNumber: Yup.string()
+      .required('שדה חובה')
+      .min(9, 'מספר טלפון מכיל לפחות 9 ספרות')
+      .max(10, 'מספר טלפון לא יכול להכיל יותר מ10 ספרות')
+      .matches(/^[0-9]+$/, "מספר טלפון לא תקין"),
     password: Yup.string()
-        .required('Password is required')
-        .min(6, 'Password must be at least 6 characters')
-        .max(40, 'Password must not exceed 40 characters'),
-});
-
-  const {
-      register,
-      handleSubmit,
-      formState: { errors }
-  } = useForm({
-      resolver: yupResolver(validationSchema)
+      .required('שדה חובה')
+      .min(6, 'סיסמא חייבת להיות לפחות 6 תווים')
+      .max(40, 'הסיסמא לא יכולה להיות יותר מ40 תווים')
+      .matches(/[+a-zA-z][a-zA-z0-9]+$/, 'סיסמא מכילה לפחות אות אחת באנגלית ומספרים בלבד')
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(validationSchema)
+  });
+
+  const onChangeUserName = async (e: any) => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    if (e.target.value.length >= 6) {
+      timerRef.current = setTimeout(async () => {
+        const isUserNameExist: any = await managerService.getIsUserNameExist(e.target.value).then((res: any) => res);
+        if (isUserNameExist)
+          setUserNameExistError("שם משתמש תפוס");
+        else
+          setUserNameExistError(undefined);
+      }, 2000);
+    }
+  }
+
   //פונקציה שיוצרת משתמש חדש
-  const onSubmit = async (data:any) =>{
-      console.log(JSON.stringify(data, null, 2));
-      const newManager = {
-        name: data.userName,
-        email: data.email,
-        password: data.password,
-        // phoneNumber: data.phoneNumber
-      }
-      try{
-          await api.post(`/Manager/InsertManager`,newManager).then(res=> res.data);
-          const all : any = await api.get(`/Manager/Manager`).then(res=> res.data);
-          alert(JSON.stringify(all, null, 2));
-          console.log(all);
-         // dispatch({type:'USER_CONNECTION', payload: {name: manager.name, password: manager.password}});
-      }
-      catch{
-          console.log("no sucsees");
-      }
+  const onSubmit = (data: any) => {
+    console.log(JSON.stringify(data, null, 2));
+    const newManager = {
+      fullName: data.fullName,
+      userName: data.userName,
+      email: data.email,
+      password: data.password,
+      phoneNumber: data.phoneNumber
+    }
+    try {
+      // await api.post(`/Manager/InsertManager`,newManager).then(res=> res.data);
+      // const all : any = await api.get(`/Manager/Manager`).then(res=> res.data);
+      // alert(JSON.stringify(all, null, 2));
+      // console.log(all);
+      // dispatch({type:'USER_CONNECTION', payload: {name: manager.name, password: manager.password}});
+    }
+    catch {
+      console.log("no sucsees");
+    }
   }
 
   return (
@@ -144,34 +177,59 @@ export default function SignUp(props: any) {
         <Typography component="h1" variant="h5">
           הרשמה
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="name"
+                autoComplete="fullName"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
+                id="fullName"
                 label="שם פרטי ומשפחה"
                 autoFocus
                 className={classes.root}
-                {...register('name')}
-                error={errors.name ? true : false}
+                {...register('fullName')}
+                error={errors.fullName ? true : false}
               />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.fullName?.message}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="userName"
+                variant="outlined"
+                required
+                fullWidth
+                id="userName"
+                label="שם משתמש"
+                className={classes.root}
+                {...register('userName')}
+                onChange={onChangeUserName}
+                error={errors.userName ? true : false}
+              />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.userName?.message}
+                {userNameExistError}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="userName"
-                label="שם משתמש"
-                autoComplete="userName"
-                {...register('userName')}
-                error={errors.userName ? true : false}
+                label="סיסמא"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                {...register('password')}
+                error={errors.password ? true : false}
                 className={classes.root}
               />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.phoneNumber?.message}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -185,20 +243,26 @@ export default function SignUp(props: any) {
                 error={errors.email ? true : false}
                 className={classes.root}
               />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.email?.message}
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                label="סיסמא"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                {...register('password')}
-                error={errors.password ? true : false}
+                label="טלפון"
+                type="phoneNumber"
+                id="phoneNumber"
+                autoComplete="phoneNumber"
+                {...register('phoneNumber')}
+                error={errors.phoneNumber ? true : false}
                 className={classes.root}
               />
+              <Typography variant="inherit" color="textSecondary">
+                {errors.phoneNumber?.message}
+              </Typography>
             </Grid>
             {/* <Grid item xs={12}>
               <FormControlLabel
@@ -213,14 +277,13 @@ export default function SignUp(props: any) {
             variant="contained"
             color="primary"
             className={`p-button ${classes.submit}`}
-            onClick={handleSubmit(onSubmit)}
           >
             הרשמה
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to="/SiginIn" className="link-sign">
-               כבר יש לך חשבון? התחברות
+                כבר יש לך חשבון? התחברות
               </Link>
             </Grid>
           </Grid>

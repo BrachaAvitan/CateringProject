@@ -5,22 +5,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-//import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheetManager } from 'styled-components';
-import rtlPlugin from 'stylis-plugin-rtl';
 
-import api from '../api';
 import {
   BrowserRouter as Router,
   Switch,
@@ -28,7 +25,7 @@ import {
   Link
 } from "react-router-dom";
 import { Cookie } from '../Cookies';
-
+import { ManagerService } from '../services/ManagerService';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "grey"
     },
     "& .MuiOutlinedInput-input": {
-       color: "rgba(128, 128, 128, 0.493)"
+      color: "rgba(128, 128, 128, 0.493)"
       // color: "rgba(128, 128, 128, 0.493)"
     },
     "&:hover .MuiOutlinedInput-input": {
@@ -83,6 +80,11 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiOutlinedInput-root.Mui-focused.Mui-error .MuiOutlinedInput-notchedOutline": {
       color: 'red !important'
+    },
+    "& .MuiInputLabel-formControl": {
+      right: '0',
+      marginRight: '20px',
+      left: 'auto !important'
     }
   }
 }));
@@ -92,84 +94,91 @@ export default function SignIn(props: any) {
   const connectedUser = useSelector((state: any) => state.userReducer.connectedUser);
   const history = props.history;
   const cookie = new Cookie();
+  const managerService = new ManagerService();
   const classes = useStyles();
-  const [userName, setUserName] = useState(connectedUser.name);
-  const [password, setPassword] = useState(connectedUser.password);
-  const [changeUser, setChangeUser] = useState(false);
-  const [saveUser, setSaveUser] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [errorConnection, setErrorConnection] = useState<any>(undefined);
+
+  type FormData = {
+    userName: string;
+    password: string;
+    remember: boolean;
+    changeUser: boolean;
+  };
 
   const validationSchema = Yup.object().shape({
     userName: Yup.string()
       .required('שדה חובה')
       .min(6, 'שם משתמש חייב להיות לפחות 6 תווים')
-      .max(20, 'שם משתמש לא יכול להיות יותר מ20 תווים'),
+      .max(20, 'שם משתמש לא יכול להיות יותר מ20 תווים')
+      .matches(/^[a-zA-Z]+$/, 'שם משתמש ללא רווח ומכיל רק אותיות באנגלית'),
     password: Yup.string()
       .required('שדה חובה')
       .min(6, 'סיסמא חייבת להיות לפחות 6 תווים')
-      .max(40, 'הסיסמא לא יכולה להיות יותר מ40 תווים'),
+      .max(40, 'הסיסמא לא יכולה להיות יותר מ40 תווים')
+      .matches(/[+a-zA-z][a-zA-z0-9]+$/, 'סיסמא מכילה לפחות אות אחת באנגלית ומספרים בלבד')
   });
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(validationSchema)
   });
 
   useEffect(() => {
     if (cookie.getCookie("userId") && cookie.getCookie("userName") && cookie.getCookie("userPassword")) {
-      setUserName(cookie.getCookie("userName"));
-      setPassword(cookie.getCookie("userPassword"));
-      setSaveUser(true);
+      setChecked(true);
+      setValue("userName", cookie.getCookie("userName"));
+      setValue("password", cookie.getCookie("userPassword"));
+      setValue("remember", true);
+      setValue("changeUser", false);
     }
   }, []);
 
-  const changeValueName = (e: any) => {
-    setChangeUser(true);
-    setUserName(e.target.value);
-  }
-  const changeValuePassword = (e: any) => {
-    setChangeUser(true);
-    setPassword(e.target.value);
-  }
-
   const onChangeValueRemember = (e: any) => {
     if (e.target.checked) {
-      e.target.value = "remember";
-      setSaveUser(true);
+      setValue("remember", true);
+      setChecked(true);
     }
     else {
-      e.target.value = "dontRemember";
-      setSaveUser(false);
+      setValue("remember", false);
+      setChecked(false);
     }
+  }
+
+  const onChangeUser = (e: any) => {
+    setValue("changeUser", true);
   }
 
   //פונקציה שבודקת האם המשתמש קיים ומעבירה אותו לדף ניהול הזמנות
   const onSubmit = async (data: any) => {
-    console.log(JSON.stringify(data, null, 2));
     try {
-      const manager: any = await api.get(`/Manager/Login?name=${data.userName}&password=${data.password}`).then(res => res.data);
+      const manager: any = await managerService.getManager(data.userName, data.password).then((res: any) => res);
       if (manager) {
-        //debugger
-        //alert(JSON.stringify(manager, null, 2));
-        if (changeUser && saveUser) {
-          console.log(manager.name);
-          cookie.setCookie("userId", manager.managerId, 365);
-          cookie.setCookie("userName", manager.name, 365);
-          cookie.setCookie("userPassword", manager.password, 365);
+        if (!manager.blocked) {
+          if (data.changeUser && data.remember) {
+            console.log(manager.name);
+            cookie.setCookie("userId", manager.managerId, 365);
+            cookie.setCookie("userName", manager.userName, 365);
+            cookie.setCookie("userPassword", manager.password, 365);
+          }
+          else if (!data.remember) {
+            cookie.deleteCookie("userId");
+            cookie.deleteCookie("userName");
+            cookie.deleteCookie("userPassword");
+          }
+          dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.userName, password: manager.password } });
+          history.push('/');
         }
-        else if(!saveUser){
-          cookie.deleteCookie("userId");
-          cookie.deleteCookie("userName");
-          cookie.deleteCookie("userPassword");
+        else {
+          setErrorConnection('משתמש זה לא פעיל להפעלתו אנא צור קשר עם התמיכה');
         }
-        dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.name, password: manager.password } });
-        history.push('/');
       }
       else {
-        alert("שם משתמש או סיסמא אינם נכונים")
-        history.push('/SiginIn');
+        setErrorConnection("שם משתמש או סיסמא אינם נכונים");
       }
     }
     catch {
@@ -187,21 +196,20 @@ export default function SignIn(props: any) {
         <Typography component="h1" variant="h5">
           התחברות
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextField
             className={classes.root}
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="userName"
             label="שם משתמש"
+            required
             autoComplete="userName"
             autoFocus
             {...register('userName')}
+            onChange={onChangeUser}
             error={errors.userName ? true : false}
-            value={userName}
-            onChange={changeValueName}
           />
           <Typography variant="inherit" color="textSecondary">
             {errors.userName?.message}
@@ -217,25 +225,26 @@ export default function SignIn(props: any) {
             id="password"
             autoComplete="current-password"
             {...register('password')}
+            onChange={onChangeUser}
             error={errors.password ? true : false}
-            value={password}
-            onChange={changeValuePassword}
           />
           <Typography variant="inherit" color="textSecondary">
             {errors.password?.message}
           </Typography><br></br>
+          <Typography variant="inherit" color="textSecondary">
+            {errorConnection}
+          </Typography><br></br>
           <div className="remember-button">
-          <FormControlLabel
-            control={<Checkbox value="remember" onChange={onChangeValueRemember} checked ={saveUser} />}
-            label="זכור אותי"
-          />
+            <FormControlLabel
+              control={<Checkbox {...register('remember')} onChange={onChangeValueRemember} checked={checked} />}
+              label="זכור אותי"
+            />
           </div>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             className={`p-button ${classes.submit}`}
-            onClick={handleSubmit(onSubmit)}
           >
             התחברות
           </Button>
