@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {RecipesToOrderService} from '../../services/RecipesToOrderService';
 import AddEvent from './AddEvent';
 import { Tooltip } from 'primereact/tooltip';
+import '../../Tahoma Regular font-normal.js';
+// import $ from 'jquery';
 
 const DragAndDropCalendar = withDragAndDrop(Cal);
 
@@ -25,7 +27,7 @@ const Calendar = ({
   events = [],
   date = new Date(),
   onNavigate,
-  view = "week",
+  view = "month",
   onView,
   views = {
     addEvent: AddEvent,
@@ -58,7 +60,7 @@ const Calendar = ({
   const recipesToOrderService = new RecipesToOrderService();
   const dispatch = useDispatch();
   const productsToEvent = useSelector(state => state.eventsReducer.productsToEvent);
-  const connectedUser = useSelector(state => state.userReducer.connectedUser.managerId);
+  const connectedUser = useSelector(state => state.userReducer.connectedUser);
 
   const localizer = momentLocalizer(moment);
     // Dialog of -הפק מסמך
@@ -82,13 +84,17 @@ const Calendar = ({
     }
     const produceDocument = (event) => {
       let _event = {...event};
-    _event.start = new Date(_event.start);
-    _event.end = new Date(_event.end);
+      _event.start = new Date(_event.start);
+      _event.end = new Date(_event.end);
       debugger
       setEvent(_event);
-      recipesToOrderService.getProduceDocument(event.eventId, connectedUser)
+      let RangeDate ={
+        DateMin: `${_event.start.getMonth()+1}/${_event.start.getDate()}/${_event.start.getFullYear()} 00:00:00`,
+        DateMax: `${_event.start.getMonth()+1}/${_event.start.getDate()+1}/${_event.start.getFullYear()} 00:00:00`,
+      }
+      recipesToOrderService.getProduceDocument(connectedUser.managerId, RangeDate)
       .then(res => dispatch({ type: 'SET_PRODUCTS_TO_EVENT', payload: res}));
-      setDocumentDialog(true);
+       setDocumentDialog(true);
     }
 
   const MonthEvent = ({ event }) => (
@@ -105,8 +111,14 @@ const exportCSV = () => {
 const exportPdf = () => {
   import('jspdf').then(jsPDF => {
       import('jspdf-autotable').then(() => {
-          const doc = new jsPDF.default(0, 0);
-          doc.autoTable(exportColumns, productsToEvent);
+          const doc = new jsPDF.jsPDF();
+          doc.addFont("Tahoma Regular font.ttf", "Tahoma Regular", "normal");
+          doc.setFont("Tahoma Regular font"); // set font
+          doc.setFontSize(18);
+          doc.setR2L(true);
+          const text= "מלאי מוצרים";
+          doc.text(text, 100, 10, {styles: {font: "Tahoma Regular font", halign: 'left', isSymmetricSwapping: true, isInputVisual: true, isOutputVisual: false} });
+          doc.autoTable(exportColumns.reverse(), productsToEvent,{styles: {font: "Tahoma Regular font", halign: 'right' , isSymmetricSwapping: true , isInputVisual: true , isOutputVisual: false }});
           doc.save('products.pdf');
       })
   })
@@ -132,18 +144,19 @@ const saveAsExcelFile = (buffer, fileName) => {
   });
 }
 
-  const documentDialogFooter = ()=>(
-    <React.Fragment>
-        {/* <Button label="הפק מסמך" icon="pi pi-check" className="p-button-text" onClick={produceDocument} /> */}
-        <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-    </React.Fragment>
-  );
+  // const documentDialogFooter = ()=>(
+  //   <React.Fragment>
+  //       {/* <Button label="הפק מסמך" icon="pi pi-check" className="p-button-text" onClick={produceDocument} /> */}
+  //       <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
+  //   </React.Fragment>
+  // );
 
-  const expoetAllButton = ()=>(
+  const exportAllButton = ()=>(
       <div className="p-d-flex p-ai-center export-buttons">
-                <Button type="button" icon="pi pi-file" onClick={exportCSV} className="p-mr-2" data-pr-tooltip="CSV" />
-                <Button type="button" icon="pi pi-file-excel" onClick={exportExcel} className="p-button-success p-mr-2" data-pr-tooltip="XLS" />
-                <Button type="button" icon="pi pi-file-pdf" onClick={exportPdf} className="p-button-warning p-mr-2" data-pr-tooltip="PDF" />
+               <Tooltip target=".export-buttons>button" position="bottom" />
+                <Button type="button" style={{padding: '10px'}} icon="pi pi-file" onClick={exportCSV} className="p-mr-2" data-pr-tooltip="CSV" disabled={productsToEvent.length === 0? true: false}/>
+                <Button type="button" style={{padding: '10px'}} icon="pi pi-file-excel" onClick={exportExcel} className="p-button-success p-mr-2" data-pr-tooltip="XLS" disabled={productsToEvent.length === 0 ? true: false}/>
+                <Button type="button" style={{padding: '10px'}} icon="pi pi-file-pdf" onClick={exportPdf} className="p-button-warning p-mr-2" data-pr-tooltip="PDF"disabled={productsToEvent.length === 0 ? true: false} />
       </div>
   );
   return (
@@ -171,15 +184,15 @@ const saveAsExcelFile = (buffer, fileName) => {
       {...props}
       className="calendar-css"
     />
-    <Dialog visible={documentDialog} style={{ width: '450px' }} header="הפק מסמך ניהול מלאי" modal className="p-fluid" footer={expoetAllButton} onHide={hideDialogDocument}>
+    <Dialog visible={documentDialog} style={{ width: '450px' }} header="הפק מסמך ניהול מלאי" modal className="p-fluid" footer={exportAllButton} onHide={hideDialogDocument}>
                         <div className="p-field">
                         <h5>{event.title}  {event.start.toDateString()}</h5>
-                        <label htmlFor="startTime">{event.end.toTimeString().split(' ')[0]} - {event.start.toTimeString().split(' ')[0]}</label>
+                        <label htmlFor="startTime">{event.end.toTimeString().split(' ')[0].split(':')[0]}:{event.end.toTimeString().split(' ')[0].split(':')[1]} -{event.start.toTimeString().split(' ')[0].split(':')[0]}:{event.start.toTimeString().split(' ')[0].split(':')[1]}</label>
                          </div>
                          <div className="p-field">
                          </div>
                          <div className="card">
-                          <DataTable ref={dt} value={productsToEvent} responsiveLayout="scroll" showGridlines >
+                          <DataTable ref={dt} className="table-product" value={productsToEvent} responsiveLayout="scroll" showGridlines emptyMessage={<div>לאירוע זה אין תפריט הכנס תפריט...🤓</div>}>
                               <Column field="nameProduct" header="שם מוצר"></Column>
                               <Column field="quantityPerEvent" header="כמות לאירוע"></Column>
                               <Column field="quantityInStock" header="כמות במלאי"></Column>

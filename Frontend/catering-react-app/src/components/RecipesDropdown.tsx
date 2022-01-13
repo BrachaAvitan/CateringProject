@@ -10,19 +10,19 @@ import { TypeOfMeasurementService } from '../services/TypeOfMeasurementService';
 import { ProductService } from '../services/ProductService';
 import { useDispatch, useSelector } from 'react-redux';
 import { DoseTypeService } from '../services/DoseTypeService';
-import { RecipeService } from '../services/RecipeService';
 import { CategoryService } from '../services/CategoryService';
+import { MultiSelect } from 'primereact/multiselect';
+import './MultiSelectDemo.css';
 
 const menuTypeService = new MenuTypeService();
 const typeOfMeasurementService = new TypeOfMeasurementService();
-const productService = new ProductService();
 const doseTypeService = new DoseTypeService();
-const recipeService = new RecipeService();
 const categoryService = new CategoryService();
+const productService = new ProductService();
 
 const RecipesDropdown = (props: any) => {
     const { type, menuType, setMenu, typeOfMeasurement, setMeasurement, product, setProduct, index,
-    doseType, setDoseType , eventMenu, recipesOfDoseType, category, setCategory} = props;
+    doseType, setDoseType , eventMenu, category, setCategory} = props;
     const [selectedMenuTypes, setSelectedMenuTypes] = useState<any>(menuType);
     const [typeOfMeasurements, setTypeOfMeasurements] = useState<any>([]);
     const [selectedTypeOfMeasurement, setSelectedTypeOfMeasurement] = useState<any>(typeOfMeasurement);
@@ -30,13 +30,13 @@ const RecipesDropdown = (props: any) => {
     const [selectedDoseType, setSelectedDoseType] = useState(doseType);
     const [selectedEventMenu, setSelectedEventMenu] = useState(eventMenu);
     const [categories, setCategories] = useState<any>([]);
-    const [selectedCategory, setSelectedCategory] = useState<any>(typeOfMeasurement);
+    const [selectedCategory, setSelectedCategory] = useState<any>(category);
     const connectedUser = useSelector((state: any) => state.userReducer.connectedUser);
     const dispatch = useDispatch();
     const products = useSelector((state: any) => state.recipesReducer.products);
     const doseTypes = useSelector((state: any) => state.recipesReducer.doseTypes);
     const menuTypes = useSelector((state: any) => state.recipesReducer.menuTypes);
-    // const [products, setProducts] = useState<any>([]);
+
     useEffect(() => {
         if (type === 'menu'){
             if(!menuTypes.length)
@@ -50,40 +50,41 @@ const RecipesDropdown = (props: any) => {
         }
         else if (type === "category")
                 categoryService.getCateories().then((res:any) => setCategories(res));
+        else if(type === "product"){
+            if(!products.length)
+               productService.getProducts(connectedUser.managerId).then((res: any) => dispatch({type: 'SET_PRODUCTS', payload: res}));
+        }
     }, []);
 
 
+    //פונקציה שמשנה סוג תפריט
     const onMenuTypeChange = (e: any) => {
         setSelectedMenuTypes(e.value);
-        debugger
         setMenu(e.value);
     }
-
+    //פונקציה שמשנה סוג מדידה
     const onTypeOfMeasurementChange = (e: any) => {
-        console.log(typeOfMeasurement);
         setSelectedTypeOfMeasurement(e.value);
-        debugger
         setMeasurement(e.value, index);
     }
-
+    //פונקציה שמשנה מוצר נבחר
     const onProductChange = (e: any) => {
-        console.log(product);
-        console.log(selectedProduct);
         setSelectedProduct(e.value);
         debugger
         setProduct(e.value, index);
     }
-
+    //פונקציה שמשנה סוג מנה
     const onDoseTypeChange = (e: any) => {
         console.log(doseTypes);
         console.log(selectedDoseType);
         setSelectedDoseType(e.value);
         setDoseType(e.value);
     }
+    
     const onRecipesOfDoseTypeChange = (e: any)=>{
        setSelectedEventMenu(e.value);
     }
-
+    //פונקציה שמשנה קטגוריה
     const onCategoryChange = (e: any) =>{
         setSelectedCategory(e.value);
         setCategory(e.value);
@@ -113,12 +114,13 @@ const RecipesDropdown = (props: any) => {
                     <Dropdown value={selectedDoseType} options={doseTypes} onChange={onDoseTypeChange} optionLabel="doseName" placeholder="בחר סוג מנה" />
                 </div>
             </div>
-        ) : type === 'eventMenu' ? (
-            <div className="dropdown-demo">
-                <div className="card">
-                    <Dropdown value={selectedEventMenu} options={recipesOfDoseType} onChange={onRecipesOfDoseTypeChange} optionLabel="name" placeholder="סוגי מאכלים" />
-                </div>
-            </div>
+        // ) : type === 'eventMenu' ? (
+        //     <div className="dropdown-demo">
+        //         <div className="card">
+        //             {/* <Dropdown value={selectedEventMenu} options={recipesOfDoseType} onChange={onRecipesOfDoseTypeChange} optionLabel="name" placeholder="סוגי מאכלים" /> */}
+        //             <MultiSelect value={selectedEventMenu} options={recipesOfDoseType} onChange={onRecipesOfDoseTypeChange} optionLabel="name" placeholder="בחר מאכל" display="chip" />
+        //         </div>
+        //     </div>
         ) : type === 'category' ? (
             <div className="dropdown-demo">
                 <div className="card">

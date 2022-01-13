@@ -16,5 +16,7 @@ export class RecipeService {
     async updateRecipe(recipe: any) {
         await api.put('/Recipe/UpdateRecipe', recipe).then(res => res.data);
     }
-    //delete recipe
+    async deleteRecipe(recipesId: any, managerId: any) {
+        await api.delete(`Recipe/DeleteRecipe?id=${recipesId}&managerId=${managerId}`).then(res => res.data);
+    }
 }

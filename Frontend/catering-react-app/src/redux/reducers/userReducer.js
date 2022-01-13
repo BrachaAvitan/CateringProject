@@ -1,11 +1,12 @@
 import produce from 'immer';
-
+import { Cookie } from '../../Cookies';
+const cookie = new Cookie();
 
 const initialState = {
     connectedUser: {
-        managerId: 0,
-        name: "",
-        password: ""
+        managerId: cookie.getCookie("userId")? cookie.getCookie("userId"): 0,
+        name: cookie.getCookie("userName")? cookie.getCookie("userName"): "",
+        password: cookie.getCookie("userPassword")? cookie.getCookie("userPassword"): ""
     }
 }
 

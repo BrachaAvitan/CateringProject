@@ -10,7 +10,11 @@ export class ProductService {
         return await api.get(`/product/ProductById?id=${productId}&managerId=${managerId}`).then(res => res.data);
     }
 
-    async updateProduct(managerId: number, product:any) {
-        return await api.put(`/product/UpdateProduct?managerId=${managerId}`,product).then(res=> res.data);
+    async insertProduct(product: any) {
+        await api.post('/product/InsertProduct',product).then(res => res.data);
+    }
+
+    async updateProduct(product:any) {
+         await api.put('/Product/UpdateProduct',product).then(res=> res.data);
     }
 }

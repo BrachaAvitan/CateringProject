@@ -111,7 +111,7 @@ export default function SignIn(props: any) {
       .required('שדה חובה')
       .min(6, 'שם משתמש חייב להיות לפחות 6 תווים')
       .max(20, 'שם משתמש לא יכול להיות יותר מ20 תווים')
-      .matches(/^[a-zA-Z]+$/, 'שם משתמש ללא רווח ומכיל רק אותיות באנגלית'),
+      .matches(/^[a-zA-Z0-9]+$/, 'שם משתמש ללא רווח ומכיל אותיות באנגלית ומספרים בלבד'),
     password: Yup.string()
       .required('שדה חובה')
       .min(6, 'סיסמא חייבת להיות לפחות 6 תווים')
@@ -150,40 +150,42 @@ export default function SignIn(props: any) {
   }
 
   const onChangeUser = (e: any) => {
+    setErrorConnection("");
     setValue("changeUser", true);
   }
 
   //פונקציה שבודקת האם המשתמש קיים ומעבירה אותו לדף ניהול הזמנות
   const onSubmit = async (data: any) => {
-    try {
-      const manager: any = await managerService.getManager(data.userName, data.password).then((res: any) => res);
-      if (manager) {
-        if (!manager.blocked) {
-          if (data.changeUser && data.remember) {
-            console.log(manager.name);
-            cookie.setCookie("userId", manager.managerId, 365);
-            cookie.setCookie("userName", manager.userName, 365);
-            cookie.setCookie("userPassword", manager.password, 365);
+      try {
+        const manager: any = await managerService.getManager(data.userName, data.password).then((res: any) => res);
+        if (manager) {
+          debugger
+          if (!manager.blocked) {
+            if (data.changeUser && data.remember) {
+              console.log(manager.name);
+              cookie.setCookie("userId", manager.managerId, 365);
+              cookie.setCookie("userName", manager.userName, 365);
+              cookie.setCookie("userPassword", manager.password, 365);
+            }
+            else if (!data.changeUser && !data.remember) {
+              cookie.deleteCookie("userId");
+              cookie.deleteCookie("userName");
+              cookie.deleteCookie("userPassword");
+            }
+            dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.userName, password: manager.password } });
+            history.push('/');
           }
-          else if (!data.remember) {
-            cookie.deleteCookie("userId");
-            cookie.deleteCookie("userName");
-            cookie.deleteCookie("userPassword");
+          else {
+            setErrorConnection('משתמש זה לא פעיל להפעלתו אנא צור קשר עם התמיכה');
           }
-          dispatch({ type: 'USER_CONNECTION', payload: { managerId: manager.managerId, name: manager.userName, password: manager.password } });
-          history.push('/');
         }
         else {
-          setErrorConnection('משתמש זה לא פעיל להפעלתו אנא צור קשר עם התמיכה');
+          setErrorConnection("שם משתמש או סיסמא אינם נכונים");
         }
       }
-      else {
-        setErrorConnection("שם משתמש או סיסמא אינם נכונים");
-      }
-    }
-    catch {
+      catch {
 
-    }
+      }
   }
 
   return (
@@ -196,7 +198,7 @@ export default function SignIn(props: any) {
         <Typography component="h1" variant="h5">
           התחברות
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <TextField
             className={classes.root}
             variant="outlined"
@@ -208,7 +210,7 @@ export default function SignIn(props: any) {
             autoComplete="userName"
             autoFocus
             {...register('userName')}
-            onChange={onChangeUser}
+            onBlur={onChangeUser}
             error={errors.userName ? true : false}
           />
           <Typography variant="inherit" color="textSecondary">

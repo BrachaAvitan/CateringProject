@@ -9,6 +9,10 @@ export class DetailsEventService {
          return await api.get(`DetailsEvent/DetailsEventsInRenge?managerId=${managerId}`,rangeDate).then(res => res.data);
     }
 
+    async insertDetailsEvent(detailsEvent:any){
+        await api.post('/DetailsEvent/InsertDetailsEvent', detailsEvent).then(res => res.data);
+    } 
+
     async updateDetailsEvent(detailsEvent:any){
         await api.put('/DetailsEvent/UpdateDetailsEvent', detailsEvent).then(res => res.data);
     } 

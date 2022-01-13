@@ -71,7 +71,7 @@
 }
 .p-button-warning{
   background-color: rgba(216, 93, 93, 0.973) !important;
-  border-color: rgba(216, 93, 93, 0.973) !important;
+  border-color: rgba(204, 190, 190, 0.973) !important;
 }
 /* .rbc-day-bg{
   border-left: 1px solid #ddd;
@@ -85,4 +85,10 @@
 }
 .navbar-toggler{
   margin-left: 15px;
+}
+.p-datepicker.p-datepicker-timeonly .p-timepicker{
+  direction: ltr;
+}
+.p-field-checkbox > label{
+  margin-right: 0.5em;
 }
