@@ -19,7 +19,8 @@ namespace Entity.Converter
                 QuantityInStock = p.QuantityInStock,
                 TypeOfMeasurementId = p.TypeOfMeasurementId,
                 ManagerId = p.ManagerId,
-                TypeOfMeasurement = TypeOfMeasurementConverter.convertToTypeOfMeasurementDTO(p.TypeOfMeasurement)
+                TypeOfMeasurement = TypeOfMeasurementConverter.convertToTypeOfMeasurementDTO(p.TypeOfMeasurement),
+                Category = CategoryConverter.ConvertToCategoryDTO(p.Category),
             };
         }
 

@@ -1,4 +1,5 @@
 ﻿using BL;
+using Entity.DTO;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("DoseTypes")]
-        public async Task<List<TblDoseType>> GetAll()
+        public async Task<List<DoseTypeDTO>> GetAll()
         {
             return await doseTypeBL.GetDoseTypesAsync();
         }

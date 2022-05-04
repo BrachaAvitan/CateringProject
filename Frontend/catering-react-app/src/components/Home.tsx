@@ -147,6 +147,7 @@ function Home() {
         }
         if(selectedType === "range")
         {
+            setDate8(null);
             setDates1(dates2);
             let tomorrow: any = dates2[1];
             tomorrow.setDate(tomorrow.getDate()+1);
@@ -206,7 +207,7 @@ function Home() {
                         selectedType==="day"?(
                            <div className="p-field" style={{direction: 'ltr'}}>
                                 <label htmlFor="basic">בחר תאריך אירוע</label><br/>
-                                <Calendar id="basic" {...register("date", { required: true })} onBlur={onBlurDate} showIcon/><br/>
+                                <Calendar id="basic" {...register("date", { required: true })} onBlur={onBlurDate} showIcon dateFormat="dd/mm/yy"/><br/>
                                 {errors.date? <span>שדה חובה</span>:""}
                                 {erorrMessage}
                             </div> 
@@ -214,7 +215,7 @@ function Home() {
                         selectedType === "range"?(
                             <div className="p-field" style={{direction: 'ltr'}}>
                                 <label htmlFor="range">בחר תאריך אירוע</label><br/>
-                                <Calendar id="range" value={dates2}onChange={(e: any) => setDates2(e.value)} selectionMode="range" readOnlyInput/><br/>
+                                <Calendar id="range" value={dates2} onChange={(e: any) => setDates2(e.value)} selectionMode="range" readOnlyInput dateFormat="dd/mm/yy"/><br/>
                                 {erorrMessage}
                             </div> 
                         ):null

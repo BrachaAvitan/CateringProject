@@ -17,6 +17,7 @@ namespace Classes
         {
             this.recipesToOrderBL = _recipesToOrderBL;
         }
+
         //פונקציה לחישוב מלאי
         //input - eventId, managerId -- מזהה אירוע ומזהה בעל קייטרינג 
         //output - dictionary : key-nameProduct(string), value-count to order(double).
@@ -31,14 +32,21 @@ namespace Classes
             Dictionary<string, double> products = new Dictionary<string, double>();
             foreach (TblRecipesToOrder recipeToOrder in recipesToOrders)
             {
+                //recipeToOrder.Amount - במקום זה:
+                //לקחת את הכמות הדרושה להזמנה לחלק לכמות מתכון
+                double amount = Convert.ToDouble(recipeToOrder.Amount / recipeToOrder.Recipes.QuantityOfPortions);
+                //double count = Convert.ToDouble(productToRecipe.AmountToRecipe * amount);
                 foreach (TblProductsToRecipe productToRecipe in recipeToOrder.Recipes.TblProductsToRecipe)
                 {
-                    double count = Convert.ToDouble(productToRecipe.AmountToRecipe * recipeToOrder.Amount);
+                    double count = productToRecipe.AmountToRecipe * amount;
                     if (!products.ContainsKey(productToRecipe.Product.ProductName))
                     {
                         products.Add(productToRecipe.Product.ProductName, count);
                     }
-                    products[productToRecipe.Product.ProductName] += count;
+                    else
+                    {
+                        products[productToRecipe.Product.ProductName] += count;
+                    }
                 }
             }
             return products;

@@ -20,7 +20,8 @@ namespace Entity.Converter
                 DoseTypeId = r.DoseTypeId,
                 Instructions = r.Instructions,
                 ManagerId = r.ManagerId,
-                Menu = new MenuTypeDTO { MenuId = r.Menu.MenuId, MenuName = r.Menu.MenuName}
+                Menu = new MenuTypeDTO { MenuId = r.Menu.MenuId, MenuName = r.Menu.MenuName },
+                DoseType = new DoseTypeDTO { DoseTypeId = r.DoseType.DoseTypeId, DoseName = r.DoseType.DoseName}
             };
         }
 

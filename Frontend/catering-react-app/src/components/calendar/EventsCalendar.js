@@ -74,6 +74,15 @@ const EventsCalendar = () => {
       menuName: ''
     }
   }
+  let recipeToOrderEmpty = {
+    recipesToOrderId:0,
+    eventId: 0,
+    recipesId:0,
+    amount: 0,
+  }
+  let _recipesToOrderInsert = [];
+  let indexArr = 0;
+
   const detailsEventService = new DetailsEventService();
   const doseTypesService = new DoseTypeService();
   const recipeService = new RecipeService();
@@ -84,6 +93,8 @@ const EventsCalendar = () => {
   const recipesToOrder = useSelector(state => state.eventsReducer.recipesToOrder);
   const recipesOrder = useSelector(state => state.eventsReducer.recipesOrder);
   const [event, setEvent] = useState(eventEmpty);
+  const [recipesToOrderInsert, setRecipesToOrderInsert] = useState([]);
+  const [recipeToOrder, setRecipeToOrder] = useState(recipeToOrderEmpty);
   const toast = useRef(null);
 
   const [date, setDate] = useState(now());
@@ -249,8 +260,8 @@ const EventsCalendar = () => {
     setEvent(_event);
     setMenuType(_event.menu);
     setStep(0);
-    if (!recipesToOrder.length)
-      recipesToOrderService.getRecipesToOrder(event.eventId, connectedUser.managerId).then(res => dispatch({ type: 'SET_RECIPES_TO_ORDER', payload: res }));
+    // if (recipesToOrder.length)
+    recipesToOrderService.getRecipesToOrder(event.eventId, connectedUser.managerId).then(res => dispatch({ type: 'SET_RECIPES_TO_ORDER', payload: res }));
     if (!recipesOrder.length) {
       debugger
       recipesToOrderService.getRecipes(event.eventId, connectedUser.managerId).then(res => { dispatch({ type: 'SET_RECIPES_ORDER', payload: res }); setSelectedRecipes(res); });
@@ -284,6 +295,13 @@ const EventsCalendar = () => {
       detailsEventService.updateDetailsEvent(_event);
       //insert or update recipesToOrder
       //***************************************************************************/
+      recipesToOrderInsert.map((recipe, index) =>{
+           if(recipe.amount> 0){
+             recipesToOrderService.updateRecipeToOrder(recipe);
+           }
+ 
+      })
+      console.log(recipesToOrderInsert);
       toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'האירוע עודכן', life: 3000 });
     }
     else {
@@ -293,18 +311,28 @@ const EventsCalendar = () => {
         details: _event.details,
         StartDate: _event.start,
         EndDate: _event.end,
-        MenuId: menuType.menuId,
+        MenuId: _event.menuId,
         numberOfDose: _event.numberOfDose,
         toolsType: _event.toolsType,
         isCompleted: _event.isCompleted,
         managerId: connectedUser.managerId
       }
+      // _event.menuId = menuType.menuId;
+      _event.managerId = connectedUser.managerId;
       debugger
       //insert event
+      _events.push(_event);
       detailsEventService.insertDetailsEvent(eventInsert);
       //insert recipeToOrder
       //**********************************************************************************/
+      recipesToOrderInsert.map((recipe, index) =>{
+      if(recipe.recipesToOrderId === 0){
+        recipesToOrderService.insertRecipeToOrder(recipe);
+      }
+   })
+      toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'האירוע נוסף', life: 3000 });
     }
+    dispatch({type:'SET_EVENTS', payload: _events});
     setProductDialog(false);
   }
 
@@ -433,7 +461,36 @@ const EventsCalendar = () => {
 
     setEvent(_event);
 }
+const onInputAmountChange = (value, name, id) => {
+  let _recipesToOrderEvent = recipesToOrder.filter((rOrder)=> rOrder.recipesId === id);
+  let _recipesToOrderInsert = [...recipesToOrderInsert];
+  let index = findIndexByIdOrder(id);
+  if(index != -1)
+     _recipesToOrderInsert[index].amount = value;
+  else{
+    let _recipeToOrder = {...recipeToOrder};
+    // _recipesToOrderInsert.push(_recipeToOrder);
+    //  _recipeToOrder.recipesToOrderId =  _recipesToOrderEvent.length>0? _recipesToOrderEvent[index].recipesId: 0;
+    _recipeToOrder.eventId = event.eventId;
+    _recipeToOrder.recipesId = id;
+    _recipeToOrder.amount = _recipesToOrderEvent.length>0? 50: 0;
+    _recipesToOrderInsert.push(_recipeToOrder);
+  }
+  debugger
+  // (_recipesToOrderInsert[index])[`${name}`] = value;
+   setRecipesToOrderInsert(_recipesToOrderInsert);
+}
 
+const findIndexByIdOrder = (id) => {
+  let index = -1;
+  for (let i = 0; i < recipesToOrderInsert.length; i++) {
+      if (recipesToOrderInsert[i].recipesId === id) {
+          index = i;
+          break;
+      }
+  }
+  return index;
+}
   const exportCSV = () => {
     dt.current.exportCSV();
   }
@@ -559,7 +616,7 @@ const EventsCalendar = () => {
               </div>
             ) :
               (step == 2 && menuType.menuId == 1) ?
-                doseTypes.map((doseType, index) => {
+                doseTypes.map((doseType, indexAll) => {
                   let _recipesByDoseType = recipes.filter((recipe) => recipe.menuId === menuType.menuId && recipe.doseTypeId === doseType.doseTypeId);
                   debugger
                   return (
@@ -567,13 +624,26 @@ const EventsCalendar = () => {
                       <label className="p-mb-3"><b>{doseType.doseName}</b></label>
                       <div className="p-formgrid p-grid">
                         {
-                          _recipesByDoseType.map((recipe) => {
+                          _recipesByDoseType.map((recipe, index) => {
+                            let _recipesToOrderEvent = recipesToOrder.filter((rOrder)=> rOrder.recipesId === recipe.recipesId);
+                            // let _recipesToOrderInsert = recipesToOrderInsert.filter((rOrder)=> rOrder.recipesId === recipe.recipesId);
                             debugger
+                            // // indexArr+=1;
+                            // // let _recipesToOrderInsert = [...recipesToOrderInsert];
+                            // let _recipeToOrder = {...recipeToOrder};
+                            // _recipeToOrder.recipesId = recipe.recipesId;
+                            // _recipeToOrder.eventId = event.eventId;
+                            // _recipeToOrder.amount = _recipesToOrderEvent.length!==0? _recipesToOrderEvent[0].amount: 0;
+                            // _recipesToOrderInsert.push(_recipeToOrder);
+                            // if(index === _recipesByDoseType.length){
+                            //     setRecipesToOrderInsert(_recipesToOrderInsert);
+                            // }
+                            // debugger
                             return (
                               <div key={recipe.recipesId} className="p-field-checkbox p-col-6">
                                 {/* <Checkbox inputId={recipe.recipesId} name="recipe" value={recipe} onChange={(e) => onRecipeChange(e)} checked={selectedRecipes ? selectedRecipes.some((item) => item.recipesId === recipe.recipesId) : false} /> */}
                                 <div className="p-col-4">
-                                    <InputNumber id="amountToRecipe" value={0}/>
+                                    <InputNumber id="amountToRecipe" value={_recipesToOrderEvent.length>0?_recipesToOrderEvent[0].amount:0} onChange={(e) => onInputAmountChange(e.value, 'amount', recipe.recipesId)}/>
                                 </div>
                                 <label htmlFor={recipe.recipesId}>{recipe.name}</label>
                               </div>

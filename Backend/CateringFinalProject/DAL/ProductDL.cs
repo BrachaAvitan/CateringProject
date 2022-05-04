@@ -27,7 +27,7 @@ namespace DAL
 
         public async Task<List<ProductDTO>> GetProductsAsync(int managerId)
         {
-            return await db.TblProducts.Where(p => p.ManagerId == managerId).Include(p=> p.TypeOfMeasurement).Select(p => ProductConverter.ConvertToProductDTO(p)).ToListAsync();
+            return await db.TblProducts.Where(p => p.ManagerId == managerId).Include(p=> p.TypeOfMeasurement).Include(p => p.Category).Select(p => ProductConverter.ConvertToProductDTO(p)).ToListAsync();
         }
 
         public async Task<TblProducts> GetProductAsync(int id, int managerId)
@@ -43,7 +43,7 @@ namespace DAL
 
         public async Task UpdateProductAsync(TblProducts product)
         {
-            TblProducts pUpdate = db.TblProducts.FirstOrDefault(p => p.ProductId == product.ProductId);
+            TblProducts pUpdate = db.TblProducts.FirstOrDefault(p => p.ProductId == product.ProductId && p.ManagerId == product.ManagerId);
             if (pUpdate != null)
             {
                 pUpdate.ProductName = product.ProductName;

@@ -12,6 +12,9 @@ namespace DAL
         //Get All Recipes By managerId
         Task<List<RecipeDTO>> GetRecipesAsync(int managerId);
 
+        //Get Recipes By DoseTypeId & managerId
+        Task<List<RecipeDTO>> GetRecipesByDoseId(int doseTypeId, int managerId);
+
         //Get Recipe By Id & managerId
         Task<TblRecipes> GetRecipeAsync(int id, int managerId);
 

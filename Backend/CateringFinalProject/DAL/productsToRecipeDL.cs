@@ -26,7 +26,7 @@ namespace DAL
 
         public async Task<List<ProductToRecipeDTO>> GetProductsToRecipeAsync(int recipeId, int managerId)
         {
-            return await db.TblProductsToRecipe.Where(p => p.RecipesId == recipeId && p.Product.ManagerId == managerId).Include(p => p.Product).ThenInclude(p => p.TypeOfMeasurement).Select(p=> ProductToRecipeConverter.ConvertToProductToRecipe(p)).ToListAsync();
+            return await db.TblProductsToRecipe.Where(p => p.RecipesId == recipeId && p.Product.ManagerId == managerId).Include(p => p.Product).ThenInclude(p => p.TypeOfMeasurement).Include(p => p.Product).ThenInclude(p => p.Category).Select(p=> ProductToRecipeConverter.ConvertToProductToRecipe(p)).ToListAsync();
         }
 
         public async Task<TblProductsToRecipe> GetProductToRecipeAsync(int id, int managerId)

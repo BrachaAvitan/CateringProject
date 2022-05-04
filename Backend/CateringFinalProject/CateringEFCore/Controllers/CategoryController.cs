@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Entity.Models;
 using BL;
 using DAL;
+using Entity.DTO;
 
 namespace CateringEFCore.Controllers
 {
@@ -23,7 +24,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("Categories")]
-        public async Task<List<TblCategories>> GetAll()
+        public async Task<List<CategoryDTO>> GetAll()
         {
             return await categoriesBL.GetAllCategoriesAsync();
         }

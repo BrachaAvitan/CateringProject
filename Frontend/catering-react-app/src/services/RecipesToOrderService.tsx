@@ -12,4 +12,12 @@ export class RecipesToOrderService {
     async getRecipes(eventId: number, managerId: number) {
         return await api.get(`/RecipeToOrder/Recipes?eventId=${eventId}&managerId=${managerId}`).then((res: any) => res.data);
     }
+
+    async updateRecipeToOrder(recipeToOrder:any){
+        await api.put('/RecipeToOrder/UpdateRecipeToOrder', recipeToOrder).then(res => res.data);
+    }
+
+    async insertRecipeToOrder(recipeToOrder:any){
+        await api.put('/RecipeToOrder/InsertRecipeToOrder', recipeToOrder).then(res => res.data);
+    }
 }

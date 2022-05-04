@@ -60,22 +60,26 @@ namespace Entity.Models
             modelBuilder.Entity<TblDetailsEvent>(entity =>
             {
                 entity.HasKey(e => e.EventId)
-                    .HasName("PK__tmp_ms_x__2DC7BD095F40D1D6");
+                    .HasName("PK__tmp_ms_x__2DC7BD092E35B789");
 
                 entity.ToTable("tbl_detailsEvent");
 
                 entity.Property(e => e.EventId).HasColumnName("eventId");
-
-                entity.Property(e => e.Date)
-                    .HasColumnName("date")
-                    .HasColumnType("date");
 
                 entity.Property(e => e.Details)
                     .HasColumnName("details")
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EndDate)
+                    .HasColumnName("endDate")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.IsCompleted).HasColumnName("isCompleted");
+
                 entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
+                entity.Property(e => e.MenuId).HasColumnName("menuId");
 
                 entity.Property(e => e.NameOfEventOwner)
                     .IsRequired()
@@ -84,6 +88,16 @@ namespace Entity.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.NumberOfDose).HasColumnName("numberOfDose");
+
+                entity.Property(e => e.PhoneNumberOfEventOwner)
+                    .IsRequired()
+                    .HasColumnName("phoneNumberOfEventOwner")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StartDate)
+                    .HasColumnName("startDate")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.ToolsType)
                     .IsRequired()
@@ -95,7 +109,13 @@ namespace Entity.Models
                     .WithMany(p => p.TblDetailsEvent)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_detai__manag__2EDAF651");
+                    .HasConstraintName("FK__tbl_detai__manag__3D2915A8");
+
+                entity.HasOne(d => d.Menu)
+                    .WithMany(p => p.TblDetailsEvent)
+                    .HasForeignKey(d => d.MenuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_detai__menuI__37703C52");
             });
 
             modelBuilder.Entity<TblDoseType>(entity =>
@@ -116,7 +136,7 @@ namespace Entity.Models
             modelBuilder.Entity<TblManager>(entity =>
             {
                 entity.HasKey(e => e.ManagerId)
-                    .HasName("PK__tmp_ms_x__47E0141F3FFD47C2");
+                    .HasName("PK__tmp_ms_x__47E0141FCAF76BFD");
 
                 entity.ToTable("tbl_manager");
 
@@ -131,9 +151,9 @@ namespace Entity.Models
                     .HasColumnName("email")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.FullName)
                     .IsRequired()
-                    .HasColumnName("name")
+                    .HasColumnName("fullName")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Password)
@@ -149,6 +169,11 @@ namespace Entity.Models
                     .IsRequired()
                     .HasColumnName("phoneNumber")
                     .HasMaxLength(10);
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasColumnName("userName")
+                    .HasMaxLength(20);
             });
 
             modelBuilder.Entity<TblMenuTypes>(entity =>
@@ -160,10 +185,19 @@ namespace Entity.Models
 
                 entity.Property(e => e.MenuId).HasColumnName("menuId");
 
+                entity.Property(e => e.ManagerId).HasColumnName("managerId");
+
                 entity.Property(e => e.MenuName)
+                    .IsRequired()
                     .HasColumnName("menuName")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.TblMenuTypes)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__tbl_menuT__manag__3C34F16F");
             });
 
             modelBuilder.Entity<TblProducts>(entity =>
@@ -198,7 +232,7 @@ namespace Entity.Models
                     .WithMany(p => p.TblProducts)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_Produ__manag__2FCF1A8A");
+                    .HasConstraintName("FK__tbl_Produ__manag__3E1D39E1");
 
                 entity.HasOne(d => d.TypeOfMeasurement)
                     .WithMany(p => p.TblProducts)
@@ -266,7 +300,7 @@ namespace Entity.Models
                     .WithMany(p => p.TblRecipes)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_recip__manag__31B762FC");
+                    .HasConstraintName("FK__tbl_recip__manag__40058253");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.TblRecipes)
@@ -294,7 +328,7 @@ namespace Entity.Models
                     .WithMany(p => p.TblRecipesToOrder)
                     .HasForeignKey(d => d.EventId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_recip__event__1BC821DD");
+                    .HasConstraintName("FK__tbl_recip__event__3587F3E0");
 
                 entity.HasOne(d => d.Recipes)
                     .WithMany(p => p.TblRecipesToOrder)
@@ -320,7 +354,7 @@ namespace Entity.Models
                     .WithMany(p => p.TblTools)
                     .HasForeignKey(d => d.ManagerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tbl_tools__manag__30C33EC3");
+                    .HasConstraintName("FK__tbl_tools__manag__3F115E1A");
             });
 
             modelBuilder.Entity<TblTypesOfMeasurements>(entity =>

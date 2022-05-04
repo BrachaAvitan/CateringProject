@@ -1,4 +1,7 @@
 ﻿using BL;
+using CateringEFCore.Classes;
+using Classes;
+using Entity.DTO;
 using Entity.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +24,21 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpGet("RecipesToOrder")]
-        public async Task<List<TblRecipesToOrder>> GetAllAsync()
+        public async Task<List<RecipesToOrderDTO>> GetAllAsync(int id, int managerId)
         {
-            return await recipesToOrderBL.GetRecipesToOrderAsync();
+            return await recipesToOrderBL.GetRecipesToOrderAsync(id, managerId);
+        }
+
+        [HttpGet("RecipesOfOneEvent")]
+        public async Task<List<TblRecipesToOrder>> GetRecipesOfOneEvent(int id, int managerId)
+        {
+            return await recipesToOrderBL.GetRecipesOfOneEventAsync(id, managerId);
+        }
+
+        [HttpGet("Recipes")]
+        public async Task<List<RecipeDTO>> GetRecipes(int eventId, int managerId)
+        {
+            return await recipesToOrderBL.GetRecipes(eventId, managerId);
         }
 
         [HttpGet("RecipeToOrderById")]
@@ -48,6 +63,12 @@ namespace CateringEFCore.Controllers
         public async Task DeleteRecipeToOrderAsync(int id)
         {
             await recipesToOrderBL.DeleteRecipeToOrderAsync(id);
+        }
+
+        [HttpPost("ProduceDocument")]
+        public async Task<List<ProductManagementDTO>> ProduceDocument(int managerId, RangeDate rangeDate)
+        {
+            return await recipesToOrderBL.InventoryCalculation(managerId, rangeDate);
         }
     }
 }

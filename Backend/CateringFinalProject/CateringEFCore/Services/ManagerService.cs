@@ -20,7 +20,7 @@ namespace CateringEFCore.Services
 
         public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
-            var customer = cateringDbContext.TblManager.SingleOrDefault(customer => customer.Name == loginRequest.Username);
+            var customer = cateringDbContext.TblManager.SingleOrDefault(customer => customer.UserName == loginRequest.Username);
 
             if (customer == null)
             {
@@ -36,7 +36,7 @@ namespace CateringEFCore.Services
 
             var token = await Task.Run(() => TokenHelper.GenerateToken(customer));
 
-            return new LoginResponse { Username = customer.Name, FirstName = customer.Name, LastName = customer.Name, Token = token };
+            return new LoginResponse { Username = customer.UserName, FirstName = customer.UserName, LastName = customer.UserName, Token = token };
         }
     }
 }

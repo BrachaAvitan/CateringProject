@@ -195,5 +195,6 @@ C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalPro
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\bin\Debug\netcoreapp3.1\IronXL.dll
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.csproj.CoreCompileInputs.cache
 C:\2020\HandashaYearB\Final-Project-New\CateringProject\Backend\CateringFinalProject\CateringEFCore\obj\Debug\netcoreapp3.1\CateringEFCore.MvcApplicationPartsAssemblyInfo.cache

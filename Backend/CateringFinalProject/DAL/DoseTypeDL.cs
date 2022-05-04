@@ -1,4 +1,6 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.DTO;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +25,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
         //קבלת כל סוגי המנות
-        public async Task<List<TblDoseType>> GetDoseTypesAsync()
+        public async Task<List<DoseTypeDTO>> GetDoseTypesAsync()
         {
-            return await db.TblDoseType.ToListAsync();
+            return await db.TblDoseType.Select(d=> DoseTypeConverter.ConvertToDoseType(d)).ToListAsync();
         }
         //קבלת סוג מנה לפי מזהה
         public async Task<TblDoseType> GetDoseTypeAsync(int id)

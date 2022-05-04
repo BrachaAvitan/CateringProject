@@ -87,9 +87,11 @@ namespace CateringEFCore
 
             services.AddScoped(typeof(IMenuTypesDL), typeof(MenuTypesDL));
             services.AddScoped(typeof(IMenuTypesBL), typeof(MenuTypesBL));
-            services.AddScoped<IManagerService, ManagerService>();
 
-            //details Event AddScoped-- not forget!!
+            services.AddScoped(typeof(IDetailsEventDL), typeof(DetailsEventDL));
+            services.AddScoped(typeof(IDetailsEventBL), typeof(DetailsEventBL));
+
+            services.AddScoped<IManagerService, ManagerService>();
 
             services.AddControllersWithViews()
                           .AddNewtonsoftJson(options =>

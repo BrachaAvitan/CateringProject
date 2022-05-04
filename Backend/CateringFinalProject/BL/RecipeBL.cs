@@ -28,6 +28,11 @@ namespace BL
             return await RecipeDL.GetRecipesAsync(managerId);
         }
 
+        public async Task<List<RecipeDTO>> GetRecipesByDoseId(int doseTypeId, int managerId)
+        {
+            return await RecipeDL.GetRecipesByDoseId(doseTypeId, managerId);
+        }
+
         public async Task<TblRecipes> GetRecipeAsync(int id, int managerId)
         {
             return await RecipeDL.GetRecipeAsync(id, managerId);

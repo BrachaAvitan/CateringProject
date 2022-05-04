@@ -27,8 +27,13 @@ namespace DAL
 
         public async Task<List<RecipeDTO>> GetRecipesAsync(int managerId)
         {
-            return await db.TblRecipes.Where(r => r.ManagerId == managerId).Include(r => r.Menu).Select(r => RecipeConvertter.convertToRecipeDTO(r)).ToListAsync();
+            return await db.TblRecipes.Where(r => r.ManagerId == managerId).Include(r => r.Menu).Include(r => r.DoseType).Select(r => RecipeConvertter.convertToRecipeDTO(r)).ToListAsync();
             //return await db.TblRecipes.Where(r => r.ManagerId == managerId).Include(r => r.TblRecipesToOrder).ThenInclude(m => m.Event).ToListAsync();
+        }
+        //קבלת מתכונים לפי מזהה סוג מנה ומזהה בעל קיטרינג
+        public async Task<List<RecipeDTO>> GetRecipesByDoseId(int doseTypeId, int managerId)
+        {
+            return await db.TblRecipes.Where(r => r.DoseTypeId == doseTypeId && r.ManagerId == managerId).Include(r => r.Menu).Include(r => r.DoseType).Select(r => RecipeConvertter.convertToRecipeDTO(r)).ToListAsync();
         }
 
         public async Task<TblRecipes> GetRecipeAsync(int id, int managerId)
@@ -38,6 +43,7 @@ namespace DAL
 
         public async Task<int> InsertRecipeAsync(TblRecipes recipe)
         {
+            //לתקן את זה
             await db.TblRecipes.AddAsync(recipe);
             await db.SaveChangesAsync();
             List<RecipeDTO> recipes = await GetRecipesAsync(recipe.ManagerId);

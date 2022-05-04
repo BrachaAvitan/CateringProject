@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BL
     public interface IDoseTypeBL
     {
         //קבלת כל סוגי מנות
-        Task<List<TblDoseType>> GetDoseTypesAsync();
+        Task<List<DoseTypeDTO>> GetDoseTypesAsync();
         //קבלת סוג מנה לפי מזהה סוג מנה
         Task<TblDoseType> GetDoseTypeAsync(int id);
         //הוספה לטבלת סוגי מנה

@@ -14,6 +14,9 @@ namespace BL
         //Get Manager by id
         Task<TblManager> GetManagerAsync(int id);
 
+        //Get IsUserNameExist
+        Task<bool> GetIsUserNameExistAsync(string userName);
+
         //Get Manager for login by name and password
         Task<TblManager> Login(string name, string password);
 

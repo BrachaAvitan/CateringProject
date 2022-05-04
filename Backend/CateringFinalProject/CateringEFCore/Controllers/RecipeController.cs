@@ -27,6 +27,12 @@ namespace CateringEFCore.Controllers
             return await recipeBL.GetRecipesAsync(managerId);
         }
 
+        [HttpGet("RecipesByDoseType")]
+        public async Task<List<RecipeDTO>> GetRecipesByDoseType(int doseTypeId, int managerId)
+        {
+            return await recipeBL.GetRecipesByDoseId(doseTypeId, managerId);
+        }
+
         [HttpGet("RecipeById")]
         public async Task<TblRecipes> GetRecipeById(int id, int managerId)
         {
@@ -40,7 +46,7 @@ namespace CateringEFCore.Controllers
         }
 
         [HttpPut("UpdateRecipe")]
-        public async Task UpdateTool(TblRecipes recipe)
+        public async Task UpdateRecipe(TblRecipes recipe)
         {
             await recipeBL.UpdateRecipeAsync(recipe);
         }

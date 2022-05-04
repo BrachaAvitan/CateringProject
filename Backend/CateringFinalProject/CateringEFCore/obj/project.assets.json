@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "IronXL.Excel/2021.12.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/IronXL.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/IronXL.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.4": {
         "type": "package",
         "dependencies": {
@@ -1576,6 +1585,24 @@
     }
   },
   "libraries": {
+    "IronXL.Excel/2021.12.0": {
+      "sha512": "F7ekFGBm5boGJ7YiwdmRW3J1vLDqsrvMnXNYEHIGnH/NjhnAbt9Ynnjs+17MVVrMCZN2FuxlS/7LOaPHMTSzoQ==",
+      "type": "package",
+      "path": "ironxl.excel/2021.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EULA.txt",
+        "ironxl.excel.2021.12.0.nupkg.sha512",
+        "ironxl.excel.nuspec",
+        "lib/net45/IronXL.dll",
+        "lib/net45/IronXL.xml",
+        "lib/netstandard2.0/IronXL.dll",
+        "lib/netstandard2.0/IronXL.xml",
+        "readme-setup.txt",
+        "readme.txt"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/3.1.4": {
       "sha512": "8mVR4JzGoiJzrDr9/nEkrGP46nVZNGHMF2jCY4zhZctOyzT9Y7ugtrsnDGtrFShi8k83O6cpykAEWKcypYnDTA==",
       "type": "package",
@@ -5642,6 +5669,7 @@
       "BL >= 1.0.0",
       "DAL >= 1.0.0",
       "Entity >= 1.0.0",
+      "IronXL.Excel >= 2021.12.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.4",
       "Microsoft.AspNetCore.Cors >= 2.2.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.4",
@@ -5695,6 +5723,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "IronXL.Excel": {
+            "target": "Package",
+            "version": "[2021.12.0, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[3.1.4, )"

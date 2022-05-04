@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Entity.DTO;
 using Entity.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace BL
             await categoriesDL.DeleteCategoryAsync(id);
         }
 
-        public async Task<List<TblCategories>> GetAllCategoriesAsync()
+        public async Task<List<CategoryDTO>> GetAllCategoriesAsync()
         {
             return await categoriesDL.GetAllCategoriesAsync();
         }

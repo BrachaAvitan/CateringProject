@@ -15,5 +15,6 @@ namespace Entity.DTO
         public string Instructions { get; set; }
         public int ManagerId { get; set; }
         public MenuTypeDTO Menu { get; set; }
+        public DoseTypeDTO DoseType { get; set; }
     }
 }

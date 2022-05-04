@@ -139,7 +139,7 @@ const Recipes = (props: any) => {
                     if (indexProduct >= numOfProductsToRecipe && !product.edit && product.amountToRecipe > 0 && product.product)
                         _productsToRecipe.splice(indexProduct, 1);
                 });
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'המתכון עודכן', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'המתכון עודכן', life: 3000 });
             }
             else {
                 let rInsert = {
@@ -174,7 +174,7 @@ const Recipes = (props: any) => {
                     _recipe.managerId = connectedUser.managerId;
                     _recipes.push(_recipe);
                     console.log(_recipes);
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipe Created', life: 3000 });
+                    toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'המתכון נוסף', life: 3000 });
                 }
             }
             console.log(_recipes);
@@ -227,7 +227,7 @@ const Recipes = (props: any) => {
         setProductsToRecipe([]);
         setDeleteProductDialog(false);
         setRecipe(emptyRecipe);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'המתכון נמחק', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'המתכון נמחק', life: 3000 });
     }
 
     const findIndexById = (id: number) => {
@@ -255,7 +255,7 @@ const Recipes = (props: any) => {
         setDeleteProductsDialog(false);
         //מחיקת המתכונים שמסומנים
         setSelectedProducts(null);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Recipes Deleted', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'בוצע בהצלחה', detail: 'המתכון נמחק', life: 3000 });
     }
 
     const onInputChange = (e: any, name: any) => {

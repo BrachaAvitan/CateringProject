@@ -31,6 +31,11 @@ namespace BL
             return await managerDL.GetManagerAsync(id);
         }
 
+        public async Task<bool> GetIsUserNameExistAsync(string userName)
+        {
+            return await managerDL.GetIsUserNameExistAsync(userName);
+        }
+
         public async Task InsertManagerAsync(TblManager manager)
         {
             await managerDL.InsertManagerAsync(manager);

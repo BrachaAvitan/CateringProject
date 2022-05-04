@@ -1,4 +1,5 @@
-﻿using Entity.Models;
+﻿using Entity.DTO;
+using Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BL
     public interface ICategoriesBL
     {
         //קבלת כל הקטגוריות
-        Task<List<TblCategories>> GetAllCategoriesAsync();
+        Task<List<CategoryDTO>> GetAllCategoriesAsync();
         //קבלת קטגוריה לפי מזהה קטגוריה
         Task<TblCategories> GetCategoryAsync(int id);
         //הוספה לטבלת קטגוריה

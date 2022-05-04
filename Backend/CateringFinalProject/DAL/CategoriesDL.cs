@@ -1,4 +1,6 @@
-﻿using Entity.Models;
+﻿using Entity.Converter;
+using Entity.DTO;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,9 +24,9 @@ namespace DAL
             await db.SaveChangesAsync();
         }
         //החזרת כל הקטגוריות
-        public async Task<List<TblCategories>> GetAllCategoriesAsync()
+        public async Task<List<CategoryDTO>> GetAllCategoriesAsync()
         {
-            return await db.TblCategories.ToListAsync();
+            return await db.TblCategories.Select(c => CategoryConverter.ConvertToCategoryDTO(c)).ToListAsync();
         }
         //החזרת קטגוריה לפי מזהה מסוים
         public async Task<TblCategories> GetCategoryAsync(int id)
